@@ -1,3 +1,5 @@
+import { onBeforeUnmount } from "vue";
+
 export const useDragWin = () => {
   let moveIng = false;
   let startX = 0;

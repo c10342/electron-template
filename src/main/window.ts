@@ -13,8 +13,6 @@ interface WindowOptions extends BrowserWindowConstructorOptions {
   winName?: string;
 }
 
-export const winNameMap: Record<string, number> = {};
-
 const defaultOptions: WindowOptions = {
   width: 1000,
   height: 700,
@@ -24,7 +22,7 @@ const defaultOptions: WindowOptions = {
   showReady: true
 };
 
-const createWindow = (options?: WindowOptions) => {
+export const createWindow = (options?: WindowOptions) => {
   const config = {
     ...defaultOptions,
     ...(options ?? {})
@@ -82,5 +80,3 @@ const createWindow = (options?: WindowOptions) => {
   }
   return win;
 };
-
-export default createWindow;

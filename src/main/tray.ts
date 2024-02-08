@@ -1,9 +1,9 @@
 // 系统托盘
 import { Tray } from "electron";
-import createWindow from "./createWindow";
+import { createWindow } from "./window";
 import icon from "../../resources/icon.png?asset";
 
-const initTray = () => {
+export const initTray = () => {
   const win = createWindow({
     width: 200,
     height: 400,
@@ -26,5 +26,3 @@ const initTray = () => {
     win.show();
   });
 };
-
-export default initTray;

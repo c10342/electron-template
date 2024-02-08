@@ -13,8 +13,8 @@ import { BrowserWindow, app, dialog, ipcMain, shell } from "electron";
 import os from "os";
 import { store } from "./store";
 
-// jsbridge
-const initJsBridge = () => {
+// jsBridge
+export const initJsBridge = () => {
   // 设置窗口位置
   ipcMain.on(JsBridgeEnum.SetWinPosition, (event, params: SetWinPositionParams) => {
     const win = BrowserWindow.fromWebContents(event.sender);
@@ -127,5 +127,3 @@ const initJsBridge = () => {
     return win.setIgnoreMouseEvents(params.ignore, params);
   });
 };
-
-export default initJsBridge;

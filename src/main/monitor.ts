@@ -2,7 +2,7 @@ import { logError } from "@share/log";
 import { app, crashReporter } from "electron";
 
 // 错误监控
-const initMonitor = () => {
+export const initMonitor = () => {
   app.on("render-process-gone", (event, webContents, details) => {
     logError("render-process-gone", event, webContents, details);
   });
@@ -19,5 +19,3 @@ const initMonitor = () => {
     uploadToServer: false
   });
 };
-
-export default initMonitor;

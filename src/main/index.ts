@@ -1,11 +1,11 @@
 import { app, BrowserWindow } from "electron";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
-import createWindow from "./createWindow";
+import { createWindow } from "./window";
 import { initLog } from "./log";
 import { initStore } from "./store";
-import initJsBridge from "./jsbridge";
-import initMonitor from "./monitor";
-import initTray from "./tray";
+import { initJsBridge } from "./jsBridge";
+import { initMonitor } from "./monitor";
+import { initTray } from "./tray";
 
 //   取消警告
 //   Render process output: 2-%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security
