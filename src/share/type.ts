@@ -86,6 +86,10 @@ export interface SetIgnoreMouseEventsParams {
 }
 
 export interface SetStoreParams {
-  key: string;
+  key: keyof StoreState;
   value: any;
+}
+
+export interface StoreState {
+  lang: string;
 }

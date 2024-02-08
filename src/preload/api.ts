@@ -9,7 +9,8 @@ import {
   GetPathType,
   SetStoreParams,
   ShowOpenDialogParrams,
-  SetIgnoreMouseEventsParams
+  SetIgnoreMouseEventsParams,
+  StoreState
 } from "@share/type";
 import { OpenDialogReturnValue, ipcRenderer } from "electron";
 
@@ -71,7 +72,7 @@ const api = {
     return ipcRenderer.invoke(JsBridgeEnum.GetPath, type);
   },
   // 获取数据
-  [JsBridgeEnum.GetStore](key: string): Promise<any | null> {
+  [JsBridgeEnum.GetStore](key: keyof StoreState): Promise<any | null> {
     return ipcRenderer.invoke(JsBridgeEnum.GetStore, key);
   },
   // 设置数据

@@ -1,14 +1,11 @@
 // 数据状态持久化
+import { StoreState } from "@share/type";
 import Store from "electron-store";
 
-interface StroeState {
-  lang: string;
-}
-
-export let store: Store<StroeState> | null = null;
+export let store: Store<StoreState> | null = null;
 
 export const initStore = (params: { name: string }) => {
-  store = new Store<StroeState>({
+  store = new Store<StoreState>({
     name: params.name,
     watch: false,
     schema: {
@@ -18,6 +15,7 @@ export const initStore = (params: { name: string }) => {
       }
     }
   });
+  console.log(`store存放位置:${store.path}`);
   // store.onDidChange("lang", (value) => {
   //   // todo
   // });
