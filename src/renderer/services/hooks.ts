@@ -1,5 +1,10 @@
 import { onBeforeUnmount } from "vue";
+import { GlobalEventEnum } from "@share/enum";
 
+/**
+ * 拖拽窗口
+ * @returns
+ */
 export const useDragWin = () => {
   let moveIng = false;
   let startX = 0;
@@ -33,4 +38,16 @@ export const useDragWin = () => {
   });
 
   return { onMousedown };
+};
+
+/**
+ * vue文件中使用，用于监听全局的事件
+ * @param name 事件名
+ * @param action 回调函数
+ */
+export const useEventHook = (name: GlobalEventEnum, action: (...args: any) => any) => {
+  window.api.on(name, action);
+  onBeforeUnmount(() => {
+    window.api.off(name, action);
+  });
 };

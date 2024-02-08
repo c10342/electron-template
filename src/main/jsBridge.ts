@@ -1,4 +1,4 @@
-// 主/渲染进程通信
+// jsBridge，主/渲染进程通信
 import { JsBridgeEnum } from "@share/enum";
 import {
   SetWinPositionParams,
@@ -13,7 +13,6 @@ import { BrowserWindow, app, dialog, ipcMain, shell } from "electron";
 import os from "os";
 import { store } from "./store";
 
-// jsBridge
 export const initJsBridge = () => {
   // 设置窗口位置
   ipcMain.on(JsBridgeEnum.SetWinPosition, (event, params: SetWinPositionParams) => {

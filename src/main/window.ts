@@ -1,4 +1,4 @@
-// 创建窗口
+// 窗口
 import { shell, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 import { is } from "@electron-toolkit/utils";
@@ -12,7 +12,7 @@ interface WindowOptions extends BrowserWindowConstructorOptions {
   fileUrl?: string;
   winName?: string;
 }
-
+// 窗口默认配置
 const defaultOptions: WindowOptions = {
   width: 1000,
   height: 700,
@@ -22,6 +22,7 @@ const defaultOptions: WindowOptions = {
   showReady: true
 };
 
+// 创建窗口
 export const createWindow = (options?: WindowOptions) => {
   const config = {
     ...defaultOptions,
@@ -44,6 +45,7 @@ export const createWindow = (options?: WindowOptions) => {
     shell.openExternal(details.url);
     return { action: "deny" };
   });
+  // 监听浏览器错误
   win.webContents.on("console-message", (_event, level, message, line, sourceId) => {
     //  {} 1 log 23 http://localhost:5173/window/index/components/folderItem.vue
     //  {} 1 info 24 http://localhost:5173/window/index/components/folderItem.vue
@@ -57,6 +59,7 @@ export const createWindow = (options?: WindowOptions) => {
       logWarn("render-warn", message, line, sourceId);
     }
   });
+  // 广播窗口事件
   win.on("maximize", () => {
     win.webContents.send(GlobalEventEnum.Maximize);
   });
@@ -66,11 +69,15 @@ export const createWindow = (options?: WindowOptions) => {
   win.on("unmaximize", () => {
     win.webContents.send(GlobalEventEnum.Unmaximize);
   });
+  // 加载窗口内容
   if (options?.httpUrl) {
+    // 加载网络地址
     win.loadURL(options.httpUrl);
   } else if (options?.fileUrl) {
+    // 加载本地文件
     win.loadFile(options.fileUrl);
   } else if (options?.winName) {
+    // 加载项目中的页面，src\renderer\window
     const devIp = process.env["ELECTRON_RENDERER_URL"];
     if (is.dev && devIp) {
       win.loadURL(`${devIp}/window/${options.winName}/index.html`);

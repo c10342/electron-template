@@ -13,12 +13,19 @@ import { initTray } from "./tray";
 //   this app to unnecessary security risks.
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 
-function init(): void {
+// 初始化应用
+function init() {
+  // 日志
   initLog();
+  // 全局状态
   initStore({ name: "test" });
+  // JsBridge，渲染进程和主进程的通信桥梁
   initJsBridge();
+  // 错误监控
   initMonitor();
+  // 托盘
   initTray();
+  // 主窗口
   createWindow({
     minWidth: 1000,
     minHeight: 700,

@@ -4,6 +4,7 @@ import { createWindow } from "./window";
 import icon from "../../resources/icon.png?asset";
 
 export const initTray = () => {
+  // 自定义右键菜单
   const win = createWindow({
     width: 200,
     height: 400,
@@ -21,6 +22,7 @@ export const initTray = () => {
   win.setSkipTaskbar(true);
   const tray = new Tray(icon);
   tray.on("right-click", (_event, bounds) => {
+    // 根据点击位置设置窗口位置
     const info = win.getBounds();
     win.setPosition(bounds.x - (info.width - 10), bounds.y - (info.height - 10));
     win.show();
