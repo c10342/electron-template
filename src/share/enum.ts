@@ -1,5 +1,5 @@
 // JsBridge方法调用
-export enum JsBridgeEnum {
+export enum bridgeEnum {
   // 设置窗口位置
   SetWinPosition = "setWinPosition",
   // 获取窗口位置

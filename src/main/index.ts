@@ -3,7 +3,7 @@ import { electronApp, optimizer } from "@electron-toolkit/utils";
 import { createWindow } from "./window";
 import { initLog } from "./log";
 import { initStore } from "./store";
-import { initJsBridge } from "./jsBridge";
+import { initBridge } from "./bridge";
 import { initMonitor } from "./monitor";
 import { initTray } from "./tray";
 
@@ -20,7 +20,7 @@ function init() {
   // 全局状态
   initStore({ name: "test" });
   // JsBridge，渲染进程和主进程的通信桥梁
-  initJsBridge();
+  initBridge();
   // 错误监控
   initMonitor();
   // 托盘

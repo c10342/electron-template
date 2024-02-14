@@ -1,4 +1,4 @@
-import { GlobalEventEnum, JsBridgeEnum } from "@share/enum";
+import { GlobalEventEnum, bridgeEnum } from "@share/enum";
 import {
   GetWinPositionRespond,
   SetWinPositionParams,
@@ -16,40 +16,40 @@ import { OpenDialogReturnValue, ipcRenderer } from "electron";
 
 const api = {
   // 设置窗口位置
-  [JsBridgeEnum.SetWinPosition](params: SetWinPositionParams) {
-    ipcRenderer.send(JsBridgeEnum.SetWinPosition, params);
+  [bridgeEnum.SetWinPosition](params: SetWinPositionParams) {
+    ipcRenderer.send(bridgeEnum.SetWinPosition, params);
   },
   // 获取窗口位置
-  [JsBridgeEnum.GetWinPosition](): Promise<GetWinPositionRespond> {
-    return ipcRenderer.invoke(JsBridgeEnum.GetWinPosition);
+  [bridgeEnum.GetWinPosition](): Promise<GetWinPositionRespond> {
+    return ipcRenderer.invoke(bridgeEnum.GetWinPosition);
   },
   // 最小化窗口
-  [JsBridgeEnum.MinimizeWin]() {
-    ipcRenderer.send(JsBridgeEnum.MinimizeWin);
+  [bridgeEnum.MinimizeWin]() {
+    ipcRenderer.send(bridgeEnum.MinimizeWin);
   },
   //   关闭窗口
-  [JsBridgeEnum.CloseWin]() {
-    ipcRenderer.send(JsBridgeEnum.CloseWin);
+  [bridgeEnum.CloseWin]() {
+    ipcRenderer.send(bridgeEnum.CloseWin);
   },
   // 最大化窗口
-  [JsBridgeEnum.MaximizeWin]() {
-    ipcRenderer.send(JsBridgeEnum.MaximizeWin);
+  [bridgeEnum.MaximizeWin]() {
+    ipcRenderer.send(bridgeEnum.MaximizeWin);
   },
   // 还原窗口
-  [JsBridgeEnum.UnmaximizeWin]() {
-    ipcRenderer.send(JsBridgeEnum.UnmaximizeWin);
+  [bridgeEnum.UnmaximizeWin]() {
+    ipcRenderer.send(bridgeEnum.UnmaximizeWin);
   },
   // 显示窗口
-  [JsBridgeEnum.ShowWin]() {
-    ipcRenderer.send(JsBridgeEnum.ShowWin);
+  [bridgeEnum.ShowWin]() {
+    ipcRenderer.send(bridgeEnum.ShowWin);
   },
   // 隐藏窗口
-  [JsBridgeEnum.HideWin]() {
-    ipcRenderer.send(JsBridgeEnum.HideWin);
+  [bridgeEnum.HideWin]() {
+    ipcRenderer.send(bridgeEnum.HideWin);
   },
   // 根据Url使用对应的软件打开
-  [JsBridgeEnum.OpenUrl](params: OpenUrlParams) {
-    ipcRenderer.send(JsBridgeEnum.OpenUrl, params);
+  [bridgeEnum.OpenUrl](params: OpenUrlParams) {
+    ipcRenderer.send(bridgeEnum.OpenUrl, params);
   },
   // 监听事件
   on(name: GlobalEventEnum, action: (...args: any) => any) {
@@ -60,32 +60,32 @@ const api = {
     ipcRenderer.removeListener(name, action);
   },
   // 获取软件信息
-  [JsBridgeEnum.GetEnvInfo](): Promise<GetEnvInfoRespond> {
-    return ipcRenderer.invoke(JsBridgeEnum.GetEnvInfo);
+  [bridgeEnum.GetEnvInfo](): Promise<GetEnvInfoRespond> {
+    return ipcRenderer.invoke(bridgeEnum.GetEnvInfo);
   },
   // 显示消息弹框
-  [JsBridgeEnum.ShowMessageBox](params: ShowMessageBoxParams): Promise<ShowMessageBoxRespond> {
-    return ipcRenderer.invoke(JsBridgeEnum.ShowMessageBox, params);
+  [bridgeEnum.ShowMessageBox](params: ShowMessageBoxParams): Promise<ShowMessageBoxRespond> {
+    return ipcRenderer.invoke(bridgeEnum.ShowMessageBox, params);
   },
   // 获取相关路径
-  [JsBridgeEnum.GetPath](type: GetPathType): Promise<string> {
-    return ipcRenderer.invoke(JsBridgeEnum.GetPath, type);
+  [bridgeEnum.GetPath](type: GetPathType): Promise<string> {
+    return ipcRenderer.invoke(bridgeEnum.GetPath, type);
   },
   // 获取数据
-  [JsBridgeEnum.GetStore](key: keyof StoreState): Promise<any | null> {
-    return ipcRenderer.invoke(JsBridgeEnum.GetStore, key);
+  [bridgeEnum.GetStore](key: keyof StoreState): Promise<any | null> {
+    return ipcRenderer.invoke(bridgeEnum.GetStore, key);
   },
   // 设置数据
-  [JsBridgeEnum.SetStore](params: SetStoreParams) {
-    ipcRenderer.send(JsBridgeEnum.SetStore, params);
+  [bridgeEnum.SetStore](params: SetStoreParams) {
+    ipcRenderer.send(bridgeEnum.SetStore, params);
   },
   // 打开文件弹框
-  [JsBridgeEnum.ShowOpenDialog](params: ShowOpenDialogParrams): Promise<OpenDialogReturnValue> {
-    return ipcRenderer.invoke(JsBridgeEnum.ShowOpenDialog, params);
+  [bridgeEnum.ShowOpenDialog](params: ShowOpenDialogParrams): Promise<OpenDialogReturnValue> {
+    return ipcRenderer.invoke(bridgeEnum.ShowOpenDialog, params);
   },
   // 设置窗口是否可点击
-  [JsBridgeEnum.SetIgnoreMouseEvents](params: SetIgnoreMouseEventsParams) {
-    ipcRenderer.send(JsBridgeEnum.SetIgnoreMouseEvents, params);
+  [bridgeEnum.SetIgnoreMouseEvents](params: SetIgnoreMouseEventsParams) {
+    ipcRenderer.send(bridgeEnum.SetIgnoreMouseEvents, params);
   }
 };
 
