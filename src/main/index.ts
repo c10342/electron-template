@@ -13,6 +13,12 @@ import { initTray } from "./tray";
 //   this app to unnecessary security risks.
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 
+const closeApp = () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+};
+
 // 初始化应用
 function init() {
   // 日志
@@ -26,11 +32,12 @@ function init() {
   // 托盘
   initTray();
   // 主窗口
-  createWindow({
+  const mainWin = createWindow({
     minWidth: 1000,
     minHeight: 700,
     winName: "index"
   });
+  mainWin.on("closed", closeApp);
 }
 
 app.whenReady().then(() => {
@@ -46,8 +53,4 @@ app.whenReady().then(() => {
   });
 });
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
+app.on("window-all-closed", closeApp);
