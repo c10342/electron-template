@@ -1,4 +1,5 @@
 // 数据状态持久化
+import { LangEnum } from "@share/enum";
 import { StoreState } from "@share/type";
 import Store from "electron-store";
 
@@ -11,7 +12,7 @@ export const initStore = (params: { name: string }) => {
     schema: {
       lang: {
         type: "string",
-        default: ""
+        default: LangEnum.ZhCN
       }
     }
   });

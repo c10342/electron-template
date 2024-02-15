@@ -6,6 +6,8 @@ import { initStore } from "./store";
 import { initBridge } from "./bridge";
 import { initMonitor } from "./monitor";
 import { initTray } from "./tray";
+import { setLang } from "./locale";
+import { LangEnum } from "@share/enum";
 
 //   取消警告
 //   Render process output: 2-%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security
@@ -24,13 +26,15 @@ function init() {
   // 日志
   initLog();
   // 全局状态
-  initStore({ name: "test" });
+  const store = initStore({ name: "test" });
   // JsBridge，渲染进程和主进程的通信桥梁
   initBridge();
   // 错误监控
   initMonitor();
   // 托盘
   initTray();
+  // 设置语言
+  setLang(store.get("lang") as LangEnum);
   // 主窗口
   const mainWin = createWindow({
     minWidth: 1000,

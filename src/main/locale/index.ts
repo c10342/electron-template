@@ -4,6 +4,7 @@ import { isPlainObject, has } from "lodash";
 import ZhCNLang from "./lang/zh-CN";
 import EnUSLang from "./lang/en-US";
 import ZhTWLang from "./lang/en-US";
+import { store } from "../store";
 
 const langMap = {
   [LangEnum.EnUs]: EnUSLang,
@@ -21,6 +22,9 @@ export const getLang = () => {
 };
 // 获取语言
 export const setLang = (l: LangEnum) => {
+  if (l !== store?.get("lang")) {
+    store?.set("lang", l);
+  }
   lang = l;
 };
 // 处理动态参数，eg：days{num} --> getLangText('days',{num:1}) --> days1
