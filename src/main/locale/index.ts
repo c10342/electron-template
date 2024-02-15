@@ -2,11 +2,13 @@ import { LangEnum } from "@share/enum";
 import { isUndef } from "@share/helper";
 import { isPlainObject, has } from "lodash";
 import ZhCNLang from "./lang/zh-CN";
-import EnUsLang from "./lang/en-US";
+import EnUSLang from "./lang/en-US";
+import ZhTWLang from "./lang/en-US";
 
 const langMap = {
-  [LangEnum.EnUs]: EnUsLang,
-  [LangEnum.ZhCN]: ZhCNLang
+  [LangEnum.EnUs]: EnUSLang,
+  [LangEnum.ZhCN]: ZhCNLang,
+  [LangEnum.ZhTW]: ZhTWLang
 };
 
 const RE_NARGS = /(%|)\{([0-9a-zA-Z_]+)\}/g;
@@ -43,8 +45,10 @@ const format = (string: string, ...args: any) => {
     return result;
   });
 };
+
+type Path = { [k in keyof typeof ZhCNLang]: (typeof ZhCNLang)[k] };
 // 根据语言获取对应的label
-export const getLangText = (path: string, options?: any) => {
+export const getLangText = (path: keyof Path, options?: any) => {
   const array = path.split(".");
   let current: Record<string, any> | string = langMap[lang];
   let value = "";

@@ -1,5 +1,7 @@
 import { onBeforeUnmount } from "vue";
 import { GlobalEventEnum } from "@share/enum";
+import { useI18n } from "vue-i18n";
+import { messages } from "@renderer/locale";
 
 /**
  * 拖拽窗口
@@ -50,4 +52,8 @@ export const useEventHook = (name: GlobalEventEnum, action: (...args: any) => an
   onBeforeUnmount(() => {
     window.api.off(name, action);
   });
+};
+
+export const useLocale = () => {
+  return useI18n<{ messages: typeof messages }>();
 };

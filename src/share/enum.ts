@@ -48,5 +48,6 @@ export enum GlobalEventEnum {
 // 语言
 export enum LangEnum {
   ZhCN = "zh-CN",
-  EnUs = "en-US"
+  EnUs = "en-US",
+  ZhTW = "zh-TW"
 }
