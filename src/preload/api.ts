@@ -1,4 +1,4 @@
-import { GlobalEventEnum, bridgeEnum } from "@share/enum";
+import { GlobalEventEnum, LangEnum, BridgeEnum } from "@share/enum";
 import {
   GetWinPositionRespond,
   SetWinPositionParams,
@@ -16,40 +16,40 @@ import { OpenDialogReturnValue, ipcRenderer } from "electron";
 
 const api = {
   // 设置窗口位置
-  [bridgeEnum.SetWinPosition](params: SetWinPositionParams) {
-    ipcRenderer.send(bridgeEnum.SetWinPosition, params);
+  [BridgeEnum.SetWinPosition](params: SetWinPositionParams) {
+    ipcRenderer.send(BridgeEnum.SetWinPosition, params);
   },
   // 获取窗口位置
-  [bridgeEnum.GetWinPosition](): Promise<GetWinPositionRespond> {
-    return ipcRenderer.invoke(bridgeEnum.GetWinPosition);
+  [BridgeEnum.GetWinPosition](): Promise<GetWinPositionRespond> {
+    return ipcRenderer.invoke(BridgeEnum.GetWinPosition);
   },
   // 最小化窗口
-  [bridgeEnum.MinimizeWin]() {
-    ipcRenderer.send(bridgeEnum.MinimizeWin);
+  [BridgeEnum.MinimizeWin]() {
+    ipcRenderer.send(BridgeEnum.MinimizeWin);
   },
   //   关闭窗口
-  [bridgeEnum.CloseWin]() {
-    ipcRenderer.send(bridgeEnum.CloseWin);
+  [BridgeEnum.CloseWin]() {
+    ipcRenderer.send(BridgeEnum.CloseWin);
   },
   // 最大化窗口
-  [bridgeEnum.MaximizeWin]() {
-    ipcRenderer.send(bridgeEnum.MaximizeWin);
+  [BridgeEnum.MaximizeWin]() {
+    ipcRenderer.send(BridgeEnum.MaximizeWin);
   },
   // 还原窗口
-  [bridgeEnum.UnmaximizeWin]() {
-    ipcRenderer.send(bridgeEnum.UnmaximizeWin);
+  [BridgeEnum.UnmaximizeWin]() {
+    ipcRenderer.send(BridgeEnum.UnmaximizeWin);
   },
   // 显示窗口
-  [bridgeEnum.ShowWin]() {
-    ipcRenderer.send(bridgeEnum.ShowWin);
+  [BridgeEnum.ShowWin]() {
+    ipcRenderer.send(BridgeEnum.ShowWin);
   },
   // 隐藏窗口
-  [bridgeEnum.HideWin]() {
-    ipcRenderer.send(bridgeEnum.HideWin);
+  [BridgeEnum.HideWin]() {
+    ipcRenderer.send(BridgeEnum.HideWin);
   },
   // 根据Url使用对应的软件打开
-  [bridgeEnum.OpenUrl](params: OpenUrlParams) {
-    ipcRenderer.send(bridgeEnum.OpenUrl, params);
+  [BridgeEnum.OpenUrl](params: OpenUrlParams) {
+    ipcRenderer.send(BridgeEnum.OpenUrl, params);
   },
   // 监听事件
   on(name: GlobalEventEnum, action: (...args: any) => any) {
@@ -60,32 +60,40 @@ const api = {
     ipcRenderer.removeListener(name, action);
   },
   // 获取软件信息
-  [bridgeEnum.GetEnvInfo](): Promise<GetEnvInfoRespond> {
-    return ipcRenderer.invoke(bridgeEnum.GetEnvInfo);
+  [BridgeEnum.GetEnvInfo](): Promise<GetEnvInfoRespond> {
+    return ipcRenderer.invoke(BridgeEnum.GetEnvInfo);
   },
   // 显示消息弹框
-  [bridgeEnum.ShowMessageBox](params: ShowMessageBoxParams): Promise<ShowMessageBoxRespond> {
-    return ipcRenderer.invoke(bridgeEnum.ShowMessageBox, params);
+  [BridgeEnum.ShowMessageBox](params: ShowMessageBoxParams): Promise<ShowMessageBoxRespond> {
+    return ipcRenderer.invoke(BridgeEnum.ShowMessageBox, params);
   },
   // 获取相关路径
-  [bridgeEnum.GetPath](type: GetPathType): Promise<string> {
-    return ipcRenderer.invoke(bridgeEnum.GetPath, type);
+  [BridgeEnum.GetPath](type: GetPathType): Promise<string> {
+    return ipcRenderer.invoke(BridgeEnum.GetPath, type);
   },
   // 获取数据
-  [bridgeEnum.GetStore](key: keyof StoreState): Promise<any | null> {
-    return ipcRenderer.invoke(bridgeEnum.GetStore, key);
+  [BridgeEnum.GetStore](key: keyof StoreState): Promise<any | null> {
+    return ipcRenderer.invoke(BridgeEnum.GetStore, key);
   },
   // 设置数据
-  [bridgeEnum.SetStore](params: SetStoreParams) {
-    ipcRenderer.send(bridgeEnum.SetStore, params);
+  [BridgeEnum.SetStore](params: SetStoreParams) {
+    ipcRenderer.send(BridgeEnum.SetStore, params);
   },
   // 打开文件弹框
-  [bridgeEnum.ShowOpenDialog](params: ShowOpenDialogParrams): Promise<OpenDialogReturnValue> {
-    return ipcRenderer.invoke(bridgeEnum.ShowOpenDialog, params);
+  [BridgeEnum.ShowOpenDialog](params: ShowOpenDialogParrams): Promise<OpenDialogReturnValue> {
+    return ipcRenderer.invoke(BridgeEnum.ShowOpenDialog, params);
   },
   // 设置窗口是否可点击
-  [bridgeEnum.SetIgnoreMouseEvents](params: SetIgnoreMouseEventsParams) {
-    ipcRenderer.send(bridgeEnum.SetIgnoreMouseEvents, params);
+  [BridgeEnum.SetIgnoreMouseEvents](params: SetIgnoreMouseEventsParams) {
+    ipcRenderer.send(BridgeEnum.SetIgnoreMouseEvents, params);
+  },
+  // 设置语言
+  [BridgeEnum.SetLang](lang: LangEnum) {
+    ipcRenderer.send(BridgeEnum.SetLang, lang);
+  },
+  // 获取语言
+  [BridgeEnum.GetLang](): Promise<LangEnum> {
+    return ipcRenderer.invoke(BridgeEnum.GetLang);
   }
 };
 

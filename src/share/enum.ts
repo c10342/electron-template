@@ -1,5 +1,5 @@
 // JsBridge方法调用
-export enum bridgeEnum {
+export enum BridgeEnum {
   // 设置窗口位置
   SetWinPosition = "setWinPosition",
   // 获取窗口位置
@@ -31,7 +31,11 @@ export enum bridgeEnum {
   // 显示文件弹框
   ShowOpenDialog = "showOpenDialog",
   // 设置窗口是否点击穿透
-  SetIgnoreMouseEvents = "setIgnoreMouseEvents"
+  SetIgnoreMouseEvents = "setIgnoreMouseEvents",
+  // 设置语言
+  SetLang = "setLang",
+  // 获取语言
+  GetLang = "getLang"
 }
 
 // 全局事件广播
@@ -39,4 +43,10 @@ export enum GlobalEventEnum {
   Maximize = "maximize",
   Minimize = "minimize",
   Unmaximize = "unmaximize"
+}
+
+// 语言
+export enum LangEnum {
+  ZhCN = "zh-CN",
+  EnUs = "en-US"
 }
