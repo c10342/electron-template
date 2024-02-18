@@ -1,11 +1,11 @@
 import { app, BrowserWindow } from "electron";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
-import { createWindow } from "./window";
-import { initLog } from "./log";
-import { initStore } from "./store";
-import { initBridge } from "./bridge";
-import { initMonitor } from "./monitor";
-import { initTray } from "./tray";
+import { createWindow } from "./services/window";
+import { initLog } from "./services/log";
+import { initStore } from "./services/store";
+import { initBridge } from "./services/bridge";
+import { initMonitor } from "./services/monitor";
+import { initTray } from "./services/tray";
 import { setLang } from "./locale";
 import { LangEnum } from "@share/enum";
 

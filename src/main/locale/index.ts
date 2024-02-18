@@ -4,7 +4,7 @@ import { isPlainObject, has } from "lodash";
 import ZhCNLang from "./lang/zh-CN";
 import EnUSLang from "./lang/en-US";
 import ZhTWLang from "./lang/en-US";
-import { store } from "../store";
+import { store } from "../services/store";
 
 const langMap = {
   [LangEnum.EnUs]: EnUSLang,

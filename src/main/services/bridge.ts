@@ -12,7 +12,7 @@ import {
 import { BrowserWindow, app, dialog, ipcMain, shell } from "electron";
 import os from "os";
 import { store } from "./store";
-import { getLang, setLang } from "./locale";
+import { getLang, setLang } from "../locale";
 
 export const initBridge = () => {
   // 设置窗口位置

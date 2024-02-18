@@ -3,7 +3,7 @@ import { shell, BrowserWindow, BrowserWindowConstructorOptions } from "electron"
 import { join } from "path";
 import { is } from "@electron-toolkit/utils";
 import { GlobalEventEnum } from "@share/enum";
-import icon from "../../resources/icon.png?asset";
+import icon from "@resources/icon.png?asset";
 import { logError, logWarn } from "@share/log";
 
 interface WindowOptions extends BrowserWindowConstructorOptions {

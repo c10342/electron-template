@@ -1,7 +1,7 @@
 // 系统托盘
 import { Tray } from "electron";
 import { createWindow } from "./window";
-import icon from "../../resources/icon.png?asset";
+import icon from "@resources/icon.png?asset";
 
 export const initTray = () => {
   // 自定义右键菜单
