@@ -31,6 +31,7 @@ export const createWindow = (options?: WindowOptions) => {
   const win = new BrowserWindow({
     ...config,
     webPreferences: {
+      // 打包后所有代码都在main/index.js一个文件，所以不是../../preload/index.js
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false
     }
