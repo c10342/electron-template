@@ -20,7 +20,8 @@ export default defineConfig({
   main: {
     resolve: {
       alias: {
-        "@share": resolve("src/share")
+        "@share": resolve("src/share"),
+        "@resources": resolve("resources")
       }
     },
     plugins: [externalizeDepsPlugin()]
@@ -37,7 +38,8 @@ export default defineConfig({
     resolve: {
       alias: {
         "@renderer": resolve("src/renderer"),
-        "@share": resolve("src/share")
+        "@share": resolve("src/share"),
+        "@resources": resolve("resources")
       }
     },
     plugins: [vue()],

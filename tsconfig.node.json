@@ -15,6 +15,9 @@
     "paths": {
       "@share/*": [
         "src/share/*"
+      ],
+      "@resources/*":[
+        "resources/*"
       ]
     }
   }
