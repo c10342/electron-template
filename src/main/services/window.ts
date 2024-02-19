@@ -22,7 +22,11 @@ const defaultOptions: WindowOptions = {
   showReady: true
 };
 
-// 创建窗口
+/**
+ * 创建窗口
+ * @param options WindowOptions
+ * @returns
+ */
 export const createWindow = (options?: WindowOptions) => {
   const config = {
     ...defaultOptions,

@@ -2,6 +2,9 @@
 import { logError } from "@share/log";
 import { app, crashReporter } from "electron";
 
+/**
+ * 初始化错误监控
+ */
 export const initMonitor = () => {
   app.on("render-process-gone", (event, webContents, details) => {
     logError("render-process-gone", event, webContents, details);

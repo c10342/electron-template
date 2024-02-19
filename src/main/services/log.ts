@@ -4,6 +4,9 @@ import log from "electron-log";
 import moment from "moment";
 
 // 日志等级：error->warn->info->verbose->debug->silly
+/**
+ * 初始化日志
+ */
 export const initLog = () => {
   log.initialize({ preload: true });
   //   输出到文件的内容

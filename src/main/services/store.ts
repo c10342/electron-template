@@ -5,6 +5,11 @@ import Store from "electron-store";
 
 export let store: Store<StoreState> | null = null;
 
+/**
+ * 初始化store
+ * @param params { name: string }
+ * @returns
+ */
 export const initStore = (params: { name: string }) => {
   store = new Store<StoreState>({
     name: params.name,

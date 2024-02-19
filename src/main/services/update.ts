@@ -10,6 +10,9 @@ const broadcastEvent = (eventName: GlobalEventEnum, ...args: any[]) => {
   });
 };
 
+/**
+ * 初始化自动更新
+ */
 export const initUpdate = () => {
   // 自动下载
   autoUpdater.autoDownload = true;
@@ -37,7 +40,10 @@ export const initUpdate = () => {
   });
 };
 
-// 检测是否有更新包
+/**
+ * 检测是否有更新包
+ * @returns
+ */
 export const checkUpdate = () => {
   // 检测是否有更新包并通知
   // return autoUpdater.checkForUpdatesAndNotify({
@@ -47,7 +53,9 @@ export const checkUpdate = () => {
   return autoUpdater.checkForUpdates();
 };
 
-// 安装更新
+/**
+ * 安装更新
+ */
 export const installUpdate = () => {
   autoUpdater.quitAndInstall();
 };

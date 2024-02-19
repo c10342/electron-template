@@ -15,6 +15,9 @@ import { store } from "./store";
 import { getLang, setLang } from "../locale";
 import { checkUpdate, installUpdate } from "./update";
 
+/**
+ * 初始化主/渲染进程通信
+ */
 export const initBridge = () => {
   // 设置窗口位置
   ipcMain.on(BridgeEnum.SetWinPosition, (event, params: SetWinPositionParams) => {

@@ -3,6 +3,9 @@ import { Tray } from "electron";
 import { createWindow } from "./window";
 import icon from "@resources/icon.png?asset";
 
+/**
+ * 初始化系统托盘
+ */
 export const initTray = () => {
   // 自定义右键菜单
   const win = createWindow({
