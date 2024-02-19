@@ -13,6 +13,7 @@ import {
   StoreState
 } from "@share/type";
 import { OpenDialogReturnValue, ipcRenderer } from "electron";
+import { UpdateCheckResult } from "electron-updater";
 
 const api = {
   // 设置窗口位置
@@ -94,6 +95,14 @@ const api = {
   // 获取语言
   [BridgeEnum.GetLang](): Promise<LangEnum> {
     return ipcRenderer.invoke(BridgeEnum.GetLang);
+  },
+  // 检查更新
+  [BridgeEnum.CheckUpdate](): Promise<UpdateCheckResult | null> {
+    return ipcRenderer.invoke(BridgeEnum.CheckUpdate);
+  },
+  // 安装更新
+  [BridgeEnum.InstallUpdate]() {
+    ipcRenderer.send(BridgeEnum.InstallUpdate);
   }
 };
 

@@ -35,7 +35,11 @@ export enum BridgeEnum {
   // 设置语言
   SetLang = "setLang",
   // 获取语言
-  GetLang = "getLang"
+  GetLang = "getLang",
+  // 检查更新
+  CheckUpdate = "checkUpdate",
+  // 安装更新
+  InstallUpdate = "installUpdate"
 }
 
 // 全局事件广播

@@ -13,6 +13,7 @@ import { BrowserWindow, app, dialog, ipcMain, shell } from "electron";
 import os from "os";
 import { store } from "./store";
 import { getLang, setLang } from "../locale";
+import { checkUpdate, installUpdate } from "./update";
 
 export const initBridge = () => {
   // 设置窗口位置
@@ -131,7 +132,9 @@ export const initBridge = () => {
     setLang(lang);
   });
   // 获取语言
-  ipcMain.handle(BridgeEnum.GetLang, () => {
-    return getLang();
-  });
+  ipcMain.handle(BridgeEnum.GetLang, getLang);
+  // 检查更新
+  ipcMain.handle(BridgeEnum.CheckUpdate, checkUpdate);
+  // 安装更新
+  ipcMain.on(BridgeEnum.InstallUpdate, installUpdate);
 };
