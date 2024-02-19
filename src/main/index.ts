@@ -8,8 +8,7 @@ import { initMonitor } from "./services/monitor";
 import { initTray } from "./services/tray";
 import { setLang } from "./locale";
 import { LangEnum } from "@share/enum";
-import { checkUpdate, initUpdate } from "./services/update";
-import { logError } from "@share/log";
+import { initUpdate } from "./services/update";
 
 //   取消警告
 //   Render process output: 2-%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security
@@ -45,7 +44,7 @@ function init() {
   });
   mainWin.on("closed", closeApp);
   initUpdate();
-  checkUpdate().catch(logError);
+  // checkUpdate().catch(logError);
 }
 
 app.whenReady().then(() => {

@@ -1,3 +1,4 @@
+import { is } from "@electron-toolkit/utils";
 import { GlobalEventEnum } from "@share/enum";
 import { BrowserWindow } from "electron";
 import { autoUpdater } from "electron-updater";
@@ -13,9 +14,11 @@ export const initUpdate = () => {
   // 自动下载
   autoUpdater.autoDownload = true;
   // 应用退出后自动安装
-  autoUpdater.autoInstallOnAppQuit = true;
-  // 开启开发环境调试
-  autoUpdater.forceDevUpdateConfig = true;
+  // autoUpdater.autoInstallOnAppQuit = true;
+  if (is.dev) {
+    // 开启开发环境调试
+    autoUpdater.forceDevUpdateConfig = true;
+  }
   //   有版本需要更新
   autoUpdater.on("update-available", (info) => {
     broadcastEvent(GlobalEventEnum.UpdateAvailable, info);
