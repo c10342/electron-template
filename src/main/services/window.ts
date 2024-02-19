@@ -1,5 +1,5 @@
 // 窗口
-import { shell, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
+import { shell, BrowserWindow, BrowserWindowConstructorOptions, app } from "electron";
 import { join } from "path";
 import { is } from "@electron-toolkit/utils";
 import { GlobalEventEnum } from "@share/enum";
@@ -91,4 +91,17 @@ export const createWindow = (options?: WindowOptions) => {
     }
   }
   return win;
+};
+
+/**
+ * 阻止打开多个应用程序
+ * @param action 回调
+ */
+export const initSingleApp = (action: (...args: any[]) => any) => {
+  const gotTheLock = app.requestSingleInstanceLock();
+  if (!gotTheLock) {
+    app.quit();
+  } else {
+    app.on("second-instance", action);
+  }
 };
