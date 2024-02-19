@@ -40,9 +40,20 @@ export enum BridgeEnum {
 
 // 全局事件广播
 export enum GlobalEventEnum {
+  // 窗口最大化
   Maximize = "maximize",
+  // 窗口最小化
   Minimize = "minimize",
-  Unmaximize = "unmaximize"
+  // 窗口还原
+  Unmaximize = "unmaximize",
+  // 有版本需要更新
+  UpdateAvailable = "update-available",
+  // 无需更新
+  UpdateNotAvailable = "update-not-available",
+  // 下载进度
+  DownloadProgress = "download-progress",
+  // 下载完成
+  UpdateDownloaded = "update-downloaded"
 }
 
 // 语言
