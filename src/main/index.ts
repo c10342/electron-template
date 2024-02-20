@@ -24,6 +24,10 @@ const closeApp = () => {
 
 // 初始化应用
 function init() {
+  // 开机自动启动
+  // app.setLoginItemSettings({
+  //   openAtLogin: true
+  // });
   // 日志
   initLog();
   // 全局状态

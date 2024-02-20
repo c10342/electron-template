@@ -18,7 +18,8 @@ const defaultOptions: WindowOptions = {
   height: 700,
   show: false,
   autoHideMenuBar: true,
-  ...(process.platform === "linux" ? { icon } : {}),
+  // ...(process.platform === "linux" ? { icon } : {}),
+  icon,
   showReady: true
 };
 
