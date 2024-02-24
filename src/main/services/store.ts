@@ -21,9 +21,5 @@ export const initStore = (params: { name: string }) => {
       }
     }
   });
-  console.log(`store存放位置:${store.path}`);
-  // store.onDidChange("lang", (value) => {
-  //   // todo
-  // });
   return store;
 };

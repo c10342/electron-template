@@ -9,6 +9,7 @@ import { initTray } from "./services/tray";
 import { setLang } from "./locale";
 import { LangEnum } from "@share/enum";
 import { initUpdate } from "./services/update";
+import { initDb } from "./db";
 
 //   取消警告
 //   Render process output: 2-%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security
@@ -23,15 +24,18 @@ const closeApp = () => {
 };
 
 // 初始化应用
-function init() {
+const init = async () => {
   // 开机自动启动
   // app.setLoginItemSettings({
   //   openAtLogin: true
   // });
+  console.log(app.getPath("userData"));
+
   // 日志
   initLog();
   // 全局状态
   const store = initStore({ name: "test" });
+  await initDb();
   // JsBridge，渲染进程和主进程的通信桥梁
   initBridge();
   // 错误监控
@@ -49,7 +53,7 @@ function init() {
   mainWin.on("closed", closeApp);
   initUpdate();
   // checkUpdate().catch(logError);
-}
+};
 
 app.whenReady().then(() => {
   electronApp.setAppUserModelId("com.electron");

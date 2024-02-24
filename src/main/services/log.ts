@@ -1,5 +1,4 @@
 // 日志
-import { app } from "electron";
 import log from "electron-log";
 import moment from "moment";
 
@@ -27,5 +26,4 @@ export const initLog = () => {
   console.error = log.error;
   console.debug = log.debug;
   console.warn = log.warn;
-  console.log(`日志存放位置:${app.getPath("userData")}`);
 };
