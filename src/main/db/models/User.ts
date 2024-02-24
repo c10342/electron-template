@@ -20,7 +20,7 @@ export const initModel = async (sequelize: Sequelize) => {
     },
     {
       // 这是其他模型参数
-      sequelize: sequelize as Sequelize, // 我们需要传递连接实例
+      sequelize, // 我们需要传递连接实例
       modelName: "User" // 我们需要选择模型名称
     }
   );
