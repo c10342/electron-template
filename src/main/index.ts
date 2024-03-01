@@ -9,7 +9,6 @@ import { initTray } from "./services/tray";
 import { setLang } from "./locale";
 import { LangEnum } from "@share/enum";
 import { initUpdate } from "./services/update";
-import { initDb } from "./db";
 
 //   取消警告
 //   Render process output: 2-%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security
@@ -35,7 +34,6 @@ const init = async () => {
   initLog();
   // 全局状态
   const store = initStore({ name: "test" });
-  await initDb();
   // JsBridge，渲染进程和主进程的通信桥梁
   initBridge();
   // 错误监控
@@ -52,7 +50,6 @@ const init = async () => {
   });
   mainWin.on("closed", closeApp);
   initUpdate();
-  // checkUpdate().catch(logError);
 };
 
 app.whenReady().then(() => {
