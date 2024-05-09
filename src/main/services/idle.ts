@@ -75,3 +75,7 @@ export const watchIdle = (action: ActionType, options?: { time?: number }) => {
   pollingIdle();
   return () => remove(action);
 };
+
+export const unWatchIdle = (action: ActionType) => {
+  remove(action);
+};

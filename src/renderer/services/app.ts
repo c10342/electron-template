@@ -1,6 +1,9 @@
 import "@renderer/assets/style/index.scss";
 import i18n from "@renderer/locale";
 import { DefineComponent, createApp, Plugin } from "vue";
+import { initLog } from "./log";
+
+initLog();
 
 // 初始化vue实例
 const initApp = (App: DefineComponent<any, any, any>, plugins: Plugin<[]>[] = []) => {

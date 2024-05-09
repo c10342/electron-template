@@ -7,13 +7,14 @@ import {
   GetPathType,
   SetStoreParams,
   ShowOpenDialogParrams,
-  SetIgnoreMouseEventsParams
+  SetIgnoreMouseEventsParams,
+  StoreStateKey
 } from "@share/type";
 import { BrowserWindow, app, dialog, ipcMain, shell } from "electron";
 import os from "os";
 import { store } from "./store";
-import { getLang, setLang } from "../locale";
 import { checkUpdate, installUpdate } from "./update";
+import { getLang, setLang } from "../i18n";
 
 /**
  * 初始化主/渲染进程通信
@@ -107,11 +108,11 @@ export const initBridge = () => {
   });
   // 设置数据
   ipcMain.on(BridgeEnum.SetStore, (_event, params: SetStoreParams) => {
-    store?.set(params.key, params.value);
+    store.set(params.key, params.value);
   });
   // 获取数据
-  ipcMain.handle(BridgeEnum.GetStore, (_event, key: string) => {
-    return store?.get(key);
+  ipcMain.handle(BridgeEnum.GetStore, (_event, key: StoreStateKey) => {
+    return store.get(key);
   });
   // 打开文件弹框
   ipcMain.handle(BridgeEnum.ShowOpenDialog, (event, params: ShowOpenDialogParrams) => {

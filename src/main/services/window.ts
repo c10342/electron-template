@@ -4,7 +4,6 @@ import { join } from "path";
 import { is } from "@electron-toolkit/utils";
 import { GlobalEventEnum } from "@share/enum";
 import icon from "@resources/icon.png?asset";
-import { logError, logWarn } from "@share/log";
 
 interface WindowOptions extends BrowserWindowConstructorOptions {
   showReady?: boolean;
@@ -50,20 +49,6 @@ export const createWindow = (options?: WindowOptions) => {
   win.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url);
     return { action: "deny" };
-  });
-  // 监听浏览器错误
-  win.webContents.on("console-message", (_event, level, message, line, sourceId) => {
-    //  {} 1 log 23 http://localhost:5173/window/index/components/folderItem.vue
-    //  {} 1 info 24 http://localhost:5173/window/index/components/folderItem.vue
-    //  {} 3 error 25 http://localhost:5173/window/index/components/folderItem.vue
-    //  {} 2 warn 26 http://localhost:5173/window/index/components/folderItem.vue
-    // 监听异常错误
-    // 在浏览器中，如果遇见未知错误或者异常错误，都会在控制台中有输出
-    if (level === 3) {
-      logError("render-error", message, line, sourceId);
-    } else if (level === 2) {
-      logWarn("render-warn", message, line, sourceId);
-    }
   });
   // 广播窗口事件
   win.on("maximize", () => {

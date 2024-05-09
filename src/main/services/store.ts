@@ -3,7 +3,7 @@ import { LangEnum } from "@share/enum";
 import { StoreState } from "@share/type";
 import Store from "electron-store";
 
-export let store: Store<StoreState> | null = null;
+let instance: Store<StoreState> | null = null;
 
 /**
  * 初始化store
@@ -11,7 +11,7 @@ export let store: Store<StoreState> | null = null;
  * @returns
  */
 export const initStore = (params: { name: string }) => {
-  store = new Store<StoreState>({
+  instance = new Store<StoreState>({
     name: params.name,
     watch: false,
     schema: {
@@ -22,4 +22,15 @@ export const initStore = (params: { name: string }) => {
     }
   });
   return store;
+};
+
+type Key = keyof StoreState;
+
+export const store = {
+  get(key: Key, defaultValue?: StoreState[Key]) {
+    return instance?.get(key) ?? defaultValue;
+  },
+  set(key: Key, value: StoreState[Key]) {
+    instance?.set(key, value);
+  }
 };

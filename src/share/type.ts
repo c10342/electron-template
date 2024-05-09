@@ -93,3 +93,5 @@ export interface SetStoreParams {
 export interface StoreState {
   lang: string;
 }
+
+export type StoreStateKey = keyof StoreState;
