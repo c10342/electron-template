@@ -1,10 +1,11 @@
 import i18n from "@renderer/locales";
-import log from "./logger";
+import log, { initLogger } from "./logger";
 import { GlobalEventEnum, LangEnum } from "@share/enum";
 import { DefineComponent, createApp as createVueApp } from "vue";
 import "../assets/styles/index.scss";
 
 export const createApp = async (App: DefineComponent<any, any, any>) => {
+  initLogger();
   const app = createVueApp(App);
 
   const savedLocale = await window.electronAPI.getStore("locale");
