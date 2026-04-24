@@ -1,17 +1,24 @@
-// JsBridge方法调用
 export enum BridgeEnum {
   MaximizeWindow = "maximizeWindow",
   MinimizeWindow = "minimizeWindow",
   RestoreWindow = "restoreWindow",
   CloseWindow = "closeWindow",
   OpenDialog = "openDialog",
+  SaveDialog = "saveDialog",
   IsMaximized = "isMaximized",
   SetLocale = "setLocale",
   GetStore = "getStore",
-  SetStore = "setStore"
+  SetStore = "setStore",
+  ReadClipboardText = "readClipboardText",
+  WriteClipboardText = "writeClipboardText",
+  ShowNotification = "showNotification",
+  OpenExternal = "openExternal",
+  OpenPath = "openPath",
+  GetScreenInfo = "getScreenInfo",
+  GetAppVersion = "getAppVersion",
+  GetPlatform = "getPlatform"
 }
 
-// 全局事件广播
 export enum GlobalEventEnum {
   MaximizeWindow = "window:maximize",
   MinimizeWindow = "window:minimize",
@@ -19,7 +26,6 @@ export enum GlobalEventEnum {
   LocaleChanged = "window:localeChanged"
 }
 
-// 语言
 export enum LangEnum {
   ZhCN = "zh-CN",
   ZhTW = "zh-TW",

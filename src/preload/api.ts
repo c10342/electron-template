@@ -1,5 +1,11 @@
 import { BridgeEnum } from "@share/enum";
-import { OpenDialogParams, StoreSchema } from "@share/type";
+import {
+  OpenDialogParams,
+  SaveDialogParams,
+  StoreSchema,
+  NotificationParams,
+  ScreenInfo
+} from "@share/type";
 import { ipcRenderer } from "electron";
 
 const api = {
@@ -33,6 +39,9 @@ const api = {
   [BridgeEnum.OpenDialog](params: OpenDialogParams): Promise<Electron.OpenDialogReturnValue> {
     return ipcRenderer.invoke(BridgeEnum.OpenDialog, params);
   },
+  [BridgeEnum.SaveDialog](params: SaveDialogParams): Promise<Electron.SaveDialogReturnValue> {
+    return ipcRenderer.invoke(BridgeEnum.SaveDialog, params);
+  },
   [BridgeEnum.SetLocale](locale: string): void {
     ipcRenderer.send(BridgeEnum.SetLocale, locale);
   },
@@ -41,6 +50,30 @@ const api = {
   },
   [BridgeEnum.SetStore]<T extends keyof StoreSchema>(key: T, value: StoreSchema[T]): Promise<void> {
     return ipcRenderer.invoke(BridgeEnum.SetStore, key, value);
+  },
+  [BridgeEnum.ReadClipboardText](): Promise<string> {
+    return ipcRenderer.invoke(BridgeEnum.ReadClipboardText);
+  },
+  [BridgeEnum.WriteClipboardText](text: string): Promise<void> {
+    return ipcRenderer.invoke(BridgeEnum.WriteClipboardText, text);
+  },
+  [BridgeEnum.ShowNotification](params: NotificationParams): Promise<boolean> {
+    return ipcRenderer.invoke(BridgeEnum.ShowNotification, params);
+  },
+  [BridgeEnum.OpenExternal](url: string): Promise<void> {
+    return ipcRenderer.invoke(BridgeEnum.OpenExternal, url);
+  },
+  [BridgeEnum.OpenPath](path: string): Promise<void> {
+    return ipcRenderer.invoke(BridgeEnum.OpenPath, path);
+  },
+  [BridgeEnum.GetScreenInfo](): Promise<ScreenInfo> {
+    return ipcRenderer.invoke(BridgeEnum.GetScreenInfo);
+  },
+  [BridgeEnum.GetAppVersion](): Promise<string> {
+    return ipcRenderer.invoke(BridgeEnum.GetAppVersion);
+  },
+  [BridgeEnum.GetPlatform](): Promise<string> {
+    return ipcRenderer.invoke(BridgeEnum.GetPlatform);
   }
 };
 

@@ -1,6 +1,21 @@
 import { BridgeEnum, GlobalEventEnum, LangEnum } from "@share/enum";
-import { OpenDialogParams, StoreSchema } from "@share/type";
-import { BrowserWindow, dialog, ipcMain } from "electron";
+import {
+  OpenDialogParams,
+  SaveDialogParams,
+  StoreSchema,
+  NotificationParams,
+  ScreenInfo
+} from "@share/type";
+import {
+  BrowserWindow,
+  clipboard,
+  dialog,
+  ipcMain,
+  Notification,
+  shell,
+  screen,
+  app
+} from "electron";
 import { setLocale } from "./i18n";
 import { broadcastAllWindow } from "./window";
 import { getStore as getStoreValue, setStore as setStoreValue } from "./store";
@@ -28,6 +43,13 @@ export const initBridge = () => {
     }
     return dialog.showOpenDialog(params);
   });
+  ipcMain.handle(BridgeEnum.SaveDialog, (event, params: SaveDialogParams) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (params.modal && win) {
+      return dialog.showSaveDialog(win, params);
+    }
+    return dialog.showSaveDialog(params);
+  });
   ipcMain.on(BridgeEnum.SetLocale, (_event, locale: string) => {
     if (Object.values(LangEnum).includes(locale as LangEnum)) {
       setLocale(locale);
@@ -50,4 +72,48 @@ export const initBridge = () => {
       setStoreValue(key, value);
     }
   );
+  ipcMain.handle(BridgeEnum.ReadClipboardText, (): string => {
+    return clipboard.readText();
+  });
+  ipcMain.handle(BridgeEnum.WriteClipboardText, (_event, text: string): void => {
+    clipboard.writeText(text);
+  });
+  ipcMain.handle(BridgeEnum.ShowNotification, (_event, params: NotificationParams): boolean => {
+    if (!Notification.isSupported()) return false;
+    const notification = new Notification({
+      title: params.title,
+      body: params.body || "",
+      subtitle: params.subtitle,
+      silent: params.silent,
+      ...(params.icon ? { icon: params.icon } : {})
+    });
+    notification.show();
+    return true;
+  });
+  ipcMain.handle(BridgeEnum.OpenExternal, (_event, url: string): Promise<void> => {
+    return shell.openExternal(url);
+  });
+  ipcMain.handle(BridgeEnum.OpenPath, (_event, path: string): Promise<void> => {
+    return shell.openPath(path).then(() => undefined);
+  });
+  ipcMain.handle(BridgeEnum.GetScreenInfo, (): ScreenInfo => {
+    const primary = screen.getPrimaryDisplay();
+    return {
+      width: primary.size.width,
+      height: primary.size.height,
+      scaleFactor: primary.scaleFactor,
+      primaryDisplay: {
+        id: primary.id,
+        bounds: primary.bounds,
+        workArea: primary.workArea,
+        scaleFactor: primary.scaleFactor
+      }
+    };
+  });
+  ipcMain.handle(BridgeEnum.GetAppVersion, (): string => {
+    return app.getVersion();
+  });
+  ipcMain.handle(BridgeEnum.GetPlatform, (): string => {
+    return process.platform;
+  });
 };
