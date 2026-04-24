@@ -1,23 +1,27 @@
 import i18next from "i18next";
-import { LocaleEnum } from "@share/enum";
+import { LangEnum } from "@share/enum";
 import zhCN from "@share/locales/zh-CN";
 import zhTW from "@share/locales/zh-TW";
 import en from "@share/locales/en";
+import { getStore, setStore } from "./store";
+import { defaultLang } from "@share/config";
 
 export const initI18n = () => {
+  const savedLocale = getStore("locale");
   i18next.init({
-    lng: LocaleEnum.ZhCN,
-    fallbackLng: LocaleEnum.ZhCN,
+    lng: savedLocale,
+    fallbackLng: defaultLang as LangEnum,
     resources: {
-      [LocaleEnum.ZhCN]: { translation: zhCN },
-      [LocaleEnum.ZhTW]: { translation: zhTW },
-      [LocaleEnum.En]: { translation: en }
+      [LangEnum.ZhCN]: { translation: zhCN },
+      [LangEnum.ZhTW]: { translation: zhTW },
+      [LangEnum.En]: { translation: en }
     }
   });
 };
 
 export const setLocale = (locale: string): void => {
   i18next.changeLanguage(locale);
+  setStore("locale", locale as LangEnum);
 };
 
 export const getLocale = (): string => {

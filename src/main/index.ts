@@ -8,6 +8,7 @@ import { initBridge } from "./bridge";
 import { initUpdater } from "./updater";
 import { createWindow } from "./window";
 import { initSingleInstance } from "./singleInstance";
+import { initStore } from "./store";
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -23,6 +24,7 @@ app.whenReady().then(() => {
   });
 
   initLogger();
+  initStore();
   initI18n();
   initBridge();
   initUpdater();

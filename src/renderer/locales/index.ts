@@ -1,17 +1,18 @@
 import { createI18n } from "vue-i18n";
-import { LocaleEnum } from "@share/enum";
+import { LangEnum } from "@share/enum";
 import zhCN from "@share/locales/zh-CN";
 import zhTW from "@share/locales/zh-TW";
 import en from "@share/locales/en";
+import { defaultLang } from "@share/config";
 
 const i18n = createI18n({
   legacy: false,
-  locale: LocaleEnum.ZhCN,
-  fallbackLocale: LocaleEnum.ZhCN,
+  locale: defaultLang,
+  fallbackLocale: defaultLang,
   messages: {
-    [LocaleEnum.ZhCN]: zhCN,
-    [LocaleEnum.ZhTW]: zhTW,
-    [LocaleEnum.En]: en
+    [LangEnum.ZhCN]: zhCN,
+    [LangEnum.ZhTW]: zhTW,
+    [LangEnum.En]: en
   }
 });
 

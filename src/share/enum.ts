@@ -6,7 +6,9 @@ export enum BridgeEnum {
   CloseWindow = "closeWindow",
   OpenDialog = "openDialog",
   IsMaximized = "isMaximized",
-  SetLocale = "setLocale"
+  SetLocale = "setLocale",
+  GetStore = "getStore",
+  SetStore = "setStore"
 }
 
 // 全局事件广播
@@ -18,7 +20,7 @@ export enum GlobalEventEnum {
 }
 
 // 语言
-export enum LocaleEnum {
+export enum LangEnum {
   ZhCN = "zh-CN",
   ZhTW = "zh-TW",
   En = "en"

@@ -1,6 +1,10 @@
 import { OpenDialogOptions } from "electron";
+import { LangEnum } from "./enum";
 
 export interface OpenDialogParams extends OpenDialogOptions {
-  // 模态弹框
   modal?: boolean;
+}
+
+export interface StoreSchema {
+  locale: LangEnum;
 }

@@ -1,5 +1,5 @@
 import { BridgeEnum } from "@share/enum";
-import { OpenDialogParams } from "@share/type";
+import { OpenDialogParams, StoreSchema } from "@share/type";
 import { ipcRenderer } from "electron";
 
 const api = {
@@ -35,6 +35,12 @@ const api = {
   },
   [BridgeEnum.SetLocale](locale: string): void {
     ipcRenderer.send(BridgeEnum.SetLocale, locale);
+  },
+  [BridgeEnum.GetStore]<T extends keyof StoreSchema>(key: T): Promise<StoreSchema[T]> {
+    return ipcRenderer.invoke(BridgeEnum.GetStore, key);
+  },
+  [BridgeEnum.SetStore]<T extends keyof StoreSchema>(key: T, value: StoreSchema[T]): Promise<void> {
+    return ipcRenderer.invoke(BridgeEnum.SetStore, key, value);
   }
 };
 
