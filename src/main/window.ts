@@ -1,8 +1,8 @@
-import { shell, BrowserWindow } from "electron";
+import { shell, BrowserWindow, dialog } from "electron";
 import { join } from "path";
 import icon from "../../resources/icon.png?asset";
 import { GlobalEventEnum } from "@share/enum";
-import log from "./logger";
+import log, { logCrash } from "./logger";
 import { is } from "@electron-toolkit/utils";
 
 export function createWindow(
@@ -46,6 +46,38 @@ export function createWindow(
 
   win.webContents.on("render-process-gone", (_event, details) => {
     log.error("Renderer process gone:", details);
+    logCrash(
+      "RenderProcessGone",
+      new Error(`reason: ${details.reason}, exitCode: ${details.exitCode}`),
+      "renderer"
+    );
+
+    if (details.reason === "crashed") {
+      dialog
+        .showMessageBox(win, {
+          type: "error",
+          title: "Renderer Crashed",
+          message: "The renderer process has crashed.",
+          detail: `Reason: ${details.reason}\nExit Code: ${details.exitCode}`,
+          buttons: ["Reload", "Close"],
+          noLink: true
+        })
+        .then(({ response }) => {
+          if (response === 0) {
+            win.reload();
+          } else {
+            win.close();
+          }
+        });
+    }
+  });
+
+  win.webContents.on("unresponsive", () => {
+    log.warn("[Window] Unresponsive:", name);
+  });
+
+  win.webContents.on("responsive", () => {
+    log.info("[Window] Responsive again:", name);
   });
 
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
