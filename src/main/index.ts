@@ -7,9 +7,12 @@ import { initI18n } from "./i18n";
 import { initBridge } from "./bridge";
 import { initUpdater } from "./updater";
 import { createWindow } from "./window";
+import { initSingleInstance } from "./singleInstance";
+
+let mainWindow: BrowserWindow | null = null;
 
 function createMainWindow() {
-  createWindow("main");
+  mainWindow = createWindow("main");
 }
 
 app.whenReady().then(() => {
@@ -24,6 +27,7 @@ app.whenReady().then(() => {
   initBridge();
   initUpdater();
   createMainWindow();
+  initSingleInstance(mainWindow!);
 
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
