@@ -2,7 +2,7 @@ import { app, BrowserWindow } from "electron";
 
 import { electronApp, optimizer } from "@electron-toolkit/utils";
 
-import { initLogger, initCrashReporter, logCrash } from "./logger";
+import log, { initLogger } from "./logger";
 import { initI18n } from "./i18n";
 import { initBridge } from "./bridge";
 import { initUpdater } from "./updater";
@@ -24,7 +24,6 @@ app.whenReady().then(() => {
   });
 
   initLogger();
-  initCrashReporter();
   initStore();
   initI18n();
   initBridge();
@@ -38,19 +37,11 @@ app.whenReady().then(() => {
 });
 
 app.on("render-process-gone", (_event, _webContents, details) => {
-  logCrash(
-    "RenderProcessGone",
-    new Error(`reason: ${details.reason}, exitCode: ${details.exitCode}`),
-    "renderer"
-  );
+  log.error("[App] render-process-gone", details);
 });
 
 app.on("child-process-gone", (_event, details) => {
-  logCrash(
-    "ChildProcessGone",
-    new Error(`type: ${details.type}, reason: ${details.reason}, exitCode: ${details.exitCode}`),
-    "child"
-  );
+  log.error("[App] child-process-gone", details);
 });
 
 app.on("window-all-closed", () => {

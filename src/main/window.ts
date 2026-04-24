@@ -2,7 +2,7 @@ import { shell, BrowserWindow, dialog } from "electron";
 import { join } from "path";
 import icon from "../../resources/icon.png?asset";
 import { GlobalEventEnum } from "@share/enum";
-import log, { logCrash } from "./logger";
+import log from "./logger";
 import { is } from "@electron-toolkit/utils";
 
 export function createWindow(
@@ -45,12 +45,7 @@ export function createWindow(
   });
 
   win.webContents.on("render-process-gone", (_event, details) => {
-    log.error("Renderer process gone:", details);
-    logCrash(
-      "RenderProcessGone",
-      new Error(`reason: ${details.reason}, exitCode: ${details.exitCode}`),
-      "renderer"
-    );
+    log.error("[Window] render-process-gone", details);
 
     if (details.reason === "crashed") {
       dialog
