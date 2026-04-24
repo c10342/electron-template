@@ -15,4 +15,10 @@ const i18n = createI18n({
   }
 });
 
+export const changeLang = (lang: string) => {
+  // 先通知主进程，主进程广播给所有窗口
+  // src\renderer\utils\createApp.ts 已经做了监听了
+  window.electronAPI.setLocale(lang);
+};
+
 export default i18n;

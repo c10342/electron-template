@@ -2,6 +2,7 @@ import { BridgeEnum, GlobalEventEnum, LocaleEnum } from "@share/enum";
 import { OpenDialogParams } from "@share/type";
 import { BrowserWindow, dialog, ipcMain } from "electron";
 import { setLocale } from "./i18n";
+import { broadcastAllWindow } from "./window";
 
 export const initBridge = () => {
   // 根据url获取文件名
@@ -36,9 +37,7 @@ export const initBridge = () => {
   ipcMain.on(BridgeEnum.SetLocale, (_event, locale: string) => {
     if (Object.values(LocaleEnum).includes(locale as LocaleEnum)) {
       setLocale(locale);
-      for (const win of BrowserWindow.getAllWindows()) {
-        win.webContents.send(GlobalEventEnum.LocaleChanged, locale);
-      }
+      broadcastAllWindow(GlobalEventEnum.LocaleChanged, locale);
     }
   });
 };

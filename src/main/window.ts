@@ -55,3 +55,9 @@ export function createWindow(
   }
   return win;
 }
+
+export const broadcastAllWindow = (name: string, ...args: any[]) => {
+  for (const win of BrowserWindow.getAllWindows()) {
+    win.webContents.send(name, ...args);
+  }
+};
