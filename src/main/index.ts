@@ -15,6 +15,10 @@ let mainWindow: BrowserWindow | null = null;
 function createMainWindow() {
   mainWindow = createWindow("main");
 }
+initSingleInstance(() => {
+  mainWindow?.show();
+  mainWindow?.focus();
+});
 
 app.whenReady().then(() => {
   electronApp.setAppUserModelId("com.electron");
@@ -29,7 +33,6 @@ app.whenReady().then(() => {
   initBridge();
   initUpdater();
   createMainWindow();
-  initSingleInstance(mainWindow!);
 
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
