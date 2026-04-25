@@ -16,7 +16,8 @@ export enum BridgeEnum {
   OpenPath = "openPath",
   GetScreenInfo = "getScreenInfo",
   GetAppVersion = "getAppVersion",
-  GetPlatform = "getPlatform"
+  GetPlatform = "getPlatform",
+  TrayMenuResize = "trayMenuResize"
 }
 
 export enum GlobalEventEnum {

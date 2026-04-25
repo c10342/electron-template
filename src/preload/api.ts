@@ -74,6 +74,9 @@ const api = {
   },
   [BridgeEnum.GetPlatform](): Promise<string> {
     return ipcRenderer.invoke(BridgeEnum.GetPlatform);
+  },
+  [BridgeEnum.TrayMenuResize](width: number, height: number): void {
+    ipcRenderer.send(BridgeEnum.TrayMenuResize, width, height);
   }
 };
 

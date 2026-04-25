@@ -1,10 +1,13 @@
 import { onBeforeUnmount, onMounted } from "vue";
 import { log } from "@renderer/utils";
 
-export const useDomResize = (target: string, action: (width: number, height: number) => any) => {
+export const useDomResize = (
+  target: string | (() => HTMLElement | null | undefined),
+  action: (width: number, height: number) => any
+) => {
   let resizeObserver: ResizeObserver | null;
   onMounted(() => {
-    const dom = document.querySelector(target);
+    const dom = typeof target === "string" ? document.querySelector(target) : target();
     if (!dom) {
       log.error(`useDomResize: ${target} 不存在`);
       return;

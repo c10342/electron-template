@@ -19,6 +19,7 @@ import {
 import { setLocale } from "./i18n";
 import { broadcastAllWindow } from "./window";
 import { getStore as getStoreValue, setStore as setStoreValue } from "./store";
+import { resizeTrayMenu } from "./tray";
 
 export const initBridge = () => {
   ipcMain.on(BridgeEnum.MaximizeWindow, (event) => {
@@ -115,5 +116,9 @@ export const initBridge = () => {
   });
   ipcMain.handle(BridgeEnum.GetPlatform, (): string => {
     return process.platform;
+  });
+
+  ipcMain.on(BridgeEnum.TrayMenuResize, (_event, width: number, height: number) => {
+    resizeTrayMenu(width, height);
   });
 };

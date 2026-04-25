@@ -9,6 +9,7 @@ import { initUpdater } from "./updater";
 import { createWindow } from "./window";
 import { initSingleInstance } from "./singleInstance";
 import { initStore } from "./store";
+import { createTray } from "./tray";
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -33,6 +34,7 @@ app.whenReady().then(() => {
   initBridge();
   initUpdater();
   createMainWindow();
+  createTray(mainWindow);
 
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
