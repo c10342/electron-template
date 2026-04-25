@@ -7,8 +7,8 @@
     "src/share/**/*.ts"
   ],
   "compilerOptions": {
-    "moduleResolution": "nodenext",
-    "module": "nodenext",
+    "moduleResolution": "bundler",
+    "module": "ESNext",
     "composite": true,
     "types": [
       "electron-vite/node"
