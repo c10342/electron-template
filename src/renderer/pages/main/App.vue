@@ -1,5 +1,8 @@
 <template>
-  <div>主窗口</div>
+  <div>
+    主窗口
+    <el-button>I am ElButton</el-button>
+  </div>
 </template>
 
 <script setup lang="ts">
