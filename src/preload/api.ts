@@ -45,6 +45,9 @@ const api = {
   [BridgeEnum.SetLang](lang: string): void {
     ipcRenderer.send(BridgeEnum.SetLang, lang);
   },
+  [BridgeEnum.GetLang](): Promise<string> {
+    return ipcRenderer.invoke(BridgeEnum.GetLang);
+  },
   [BridgeEnum.GetStore]<T extends keyof StoreSchema>(key: T): Promise<StoreSchema[T]> {
     return ipcRenderer.invoke(BridgeEnum.GetStore, key);
   },

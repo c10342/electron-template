@@ -19,7 +19,7 @@ let i18n: I18n<
 > | null;
 
 export const initI18n = async () => {
-  const lang = await window.electronAPI.getStore("lang");
+  const lang = await window.electronAPI.getLang();
   i18n = createI18n({
     legacy: false,
     locale: lang,

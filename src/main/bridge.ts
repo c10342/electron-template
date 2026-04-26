@@ -16,7 +16,7 @@ import {
   screen,
   app
 } from "electron";
-import { setLang } from "./i18n";
+import { getLang, setLang } from "./i18n";
 import { broadcastAllWindow } from "./window";
 import { getStore as getStoreValue, setStore as setStoreValue } from "./store";
 import { resizeTrayMenu } from "./tray";
@@ -56,6 +56,9 @@ export const initBridge = () => {
       setLang(lang);
       broadcastAllWindow(GlobalEventEnum.LangChanged, lang);
     }
+  });
+  ipcMain.handle(BridgeEnum.GetLang, () => {
+    return getLang();
   });
   ipcMain.handle(
     BridgeEnum.GetStore,

@@ -7,6 +7,7 @@ export enum BridgeEnum {
   SaveDialog = "saveDialog",
   IsMaximized = "isMaximized",
   SetLang = "setLang",
+  GetLang = "getLang",
   GetStore = "getStore",
   SetStore = "setStore",
   ReadClipboardText = "readClipboardText",
