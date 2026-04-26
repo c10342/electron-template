@@ -10,7 +10,7 @@ export interface SaveDialogParams extends SaveDialogOptions {
 }
 
 export interface StoreSchema {
-  locale: LangEnum;
+  lang: LangEnum;
 }
 
 export interface NotificationParams {

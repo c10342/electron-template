@@ -42,8 +42,8 @@ const api = {
   [BridgeEnum.SaveDialog](params: SaveDialogParams): Promise<Electron.SaveDialogReturnValue> {
     return ipcRenderer.invoke(BridgeEnum.SaveDialog, params);
   },
-  [BridgeEnum.SetLocale](locale: string): void {
-    ipcRenderer.send(BridgeEnum.SetLocale, locale);
+  [BridgeEnum.SetLang](lang: string): void {
+    ipcRenderer.send(BridgeEnum.SetLang, lang);
   },
   [BridgeEnum.GetStore]<T extends keyof StoreSchema>(key: T): Promise<StoreSchema[T]> {
     return ipcRenderer.invoke(BridgeEnum.GetStore, key);

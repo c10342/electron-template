@@ -8,7 +8,7 @@ let store: ElectronStore<StoreSchema>;
 export const initStore = () => {
   store = new ElectronStore<StoreSchema>({
     defaults: {
-      locale: defaultLang as LangEnum
+      lang: defaultLang as LangEnum
     }
   });
 };

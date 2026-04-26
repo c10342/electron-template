@@ -16,7 +16,7 @@ import {
   screen,
   app
 } from "electron";
-import { setLocale } from "./i18n";
+import { setLang } from "./i18n";
 import { broadcastAllWindow } from "./window";
 import { getStore as getStoreValue, setStore as setStoreValue } from "./store";
 import { resizeTrayMenu } from "./tray";
@@ -51,10 +51,10 @@ export const initBridge = () => {
     }
     return dialog.showSaveDialog(params);
   });
-  ipcMain.on(BridgeEnum.SetLocale, (_event, locale: string) => {
-    if (Object.values(LangEnum).includes(locale as LangEnum)) {
-      setLocale(locale);
-      broadcastAllWindow(GlobalEventEnum.LocaleChanged, locale);
+  ipcMain.on(BridgeEnum.SetLang, (_event, lang: string) => {
+    if (Object.values(LangEnum).includes(lang as LangEnum)) {
+      setLang(lang);
+      broadcastAllWindow(GlobalEventEnum.LangChanged, lang);
     }
   });
   ipcMain.handle(

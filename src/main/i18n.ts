@@ -7,9 +7,9 @@ import { getStore, setStore } from "./store";
 import { defaultLang } from "@share/config";
 
 export const initI18n = () => {
-  const savedLocale = getStore("locale");
+  const lang = getStore("lang");
   i18next.init({
-    lng: savedLocale,
+    lng: lang,
     fallbackLng: defaultLang as LangEnum,
     resources: {
       [LangEnum.ZhCN]: { translation: zhCN },
@@ -19,12 +19,12 @@ export const initI18n = () => {
   });
 };
 
-export const setLocale = (locale: string): void => {
-  i18next.changeLanguage(locale);
-  setStore("locale", locale as LangEnum);
+export const setLang = (lang: string): void => {
+  i18next.changeLanguage(lang);
+  setStore("lang", lang as LangEnum);
 };
 
-export const getLocale = (): string => {
+export const getLang = (): string => {
   return i18next.language;
 };
 

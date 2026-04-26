@@ -6,7 +6,7 @@ export enum BridgeEnum {
   OpenDialog = "openDialog",
   SaveDialog = "saveDialog",
   IsMaximized = "isMaximized",
-  SetLocale = "setLocale",
+  SetLang = "setLang",
   GetStore = "getStore",
   SetStore = "setStore",
   ReadClipboardText = "readClipboardText",
@@ -24,7 +24,7 @@ export enum GlobalEventEnum {
   MaximizeWindow = "window:maximize",
   MinimizeWindow = "window:minimize",
   RestoreWindow = "window:unmaximize",
-  LocaleChanged = "window:localeChanged"
+  LangChanged = "window:langChanged"
 }
 
 export enum LangEnum {
