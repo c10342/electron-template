@@ -1,5 +1,16 @@
 import log from "electron-log/main";
 import { app } from "electron";
+import { wrapLogFn } from "../share/logger";
+
+const wrappedLog = {
+  ...log,
+  error: wrapLogFn(log.error.bind(log)),
+  warn: wrapLogFn(log.warn.bind(log)),
+  info: wrapLogFn(log.info.bind(log)),
+  verbose: wrapLogFn(log.verbose.bind(log)),
+  debug: wrapLogFn(log.debug.bind(log)),
+  silly: wrapLogFn(log.silly.bind(log))
+} as typeof log;
 
 export const initLogger = () => {
   log.initialize({ preload: true });
@@ -17,7 +28,7 @@ export const initLogger = () => {
   log.errorHandler.startCatching({
     showDialog: false,
     onError({ error, errorName, processType }) {
-      log.error(`[${processType}] ${errorName}:`, error);
+      wrappedLog.error(`[${processType}] ${errorName}:`, error);
     }
   });
 
@@ -26,13 +37,13 @@ export const initLogger = () => {
     scope: "electron"
   });
 
-  log.info("========== Application started ==========");
-  log.info(`App: ${app.getName()} v${app.getVersion()}`);
-  log.info(`Electron: ${process.versions.electron}`);
-  log.info(`Chrome: ${process.versions.chrome}`);
-  log.info(`Node: ${process.versions.node}`);
-  log.info(`OS: ${process.platform} ${process.getSystemVersion()}`);
-  log.info("==========================================");
+  wrappedLog.info("========== Application started ==========");
+  wrappedLog.info(`App: ${app.getName()} v${app.getVersion()}`);
+  wrappedLog.info(`Electron: ${process.versions.electron}`);
+  wrappedLog.info(`Chrome: ${process.versions.chrome}`);
+  wrappedLog.info(`Node: ${process.versions.node}`);
+  wrappedLog.info(`OS: ${process.platform} ${process.getSystemVersion()}`);
+  wrappedLog.info("==========================================");
 };
 
-export default log;
+export default wrappedLog;
