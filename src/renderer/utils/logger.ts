@@ -1,5 +1,5 @@
 import electronLog from "electron-log/renderer";
-import { wrapLogFn } from "../../share/logger";
+import { wrapLogFn } from "@share/logger";
 
 const log = {
   ...electronLog,

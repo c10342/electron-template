@@ -1,6 +1,6 @@
 import electronLog from "electron-log/main";
 import { app } from "electron";
-import { wrapLogFn } from "../share/logger";
+import { wrapLogFn } from "@share/logger";
 
 const log = {
   ...electronLog,
