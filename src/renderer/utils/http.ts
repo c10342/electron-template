@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import log from "./logger";
+import logger from "./logger";
 
 interface ApiResponse<T = any> {
   code: number;
@@ -44,7 +44,7 @@ export class HttpClient {
         return config;
       },
       (error: AxiosError) => {
-        log.error("[HTTP] Request error:", getRequestInfo(error.config), error);
+        logger.error("[HTTP] Request error:", getRequestInfo(error.config), error);
         return Promise.reject(error);
       }
     );
@@ -53,7 +53,7 @@ export class HttpClient {
       (response: AxiosResponse<ApiResponse>) => {
         const { data, config, status } = response;
         if (data.code !== undefined && data.code !== 0 && data.code !== 200) {
-          log.error(
+          logger.error(
             `[HTTP] Business error: ${getRequestInfo(config)} | status=${status} | code=${data.code} | message=${data.message}`,
             `responseData:`,
             data,
@@ -70,7 +70,7 @@ export class HttpClient {
 
         if (response) {
           const { status, statusText, headers, data } = response;
-          log.error(
+          logger.error(
             `[HTTP] Response error: ${requestInfo} | status=${status} ${statusText}`,
             `responseData:`,
             data,
@@ -80,13 +80,16 @@ export class HttpClient {
             config?.headers
           );
         } else if (error.request) {
-          log.error(
+          logger.error(
             `[HTTP] No response received: ${requestInfo} | message=${message}`,
             `requestHeaders:`,
             config?.headers
           );
         } else {
-          log.error(`[HTTP] Request setup error: ${requestInfo} | message=${message}`, error.stack);
+          logger.error(
+            `[HTTP] Request setup error: ${requestInfo} | message=${message}`,
+            error.stack
+          );
         }
         return Promise.reject(error);
       }

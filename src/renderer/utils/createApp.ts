@@ -1,5 +1,5 @@
 import { initI18n } from "@renderer/locales";
-import log, { initLogger } from "./logger";
+import logger, { initLogger } from "./logger";
 import { DefineComponent, createApp as createVueApp } from "vue";
 import { createPinia } from "pinia";
 import "../assets/styles/index.scss";
@@ -17,7 +17,7 @@ export const createApp = async (App: DefineComponent<any, any, any>) => {
   app.use(i18n);
 
   app.config.errorHandler = (err, _instance, info) => {
-    log.error("[Vue ErrorHandler]", err, info);
+    logger.error("[Vue ErrorHandler]", err, info);
   };
 
   return app;

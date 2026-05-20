@@ -2,7 +2,7 @@ import { shell, BrowserWindow, dialog } from "electron";
 import { join } from "path";
 import icon from "../../resources/icon.png?asset";
 import { GlobalEventEnum } from "@share/enum";
-import log from "./logger";
+import logger from "./logger";
 import { is } from "@electron-toolkit/utils";
 
 export function createWindow(
@@ -45,7 +45,7 @@ export function createWindow(
   });
 
   win.webContents.on("render-process-gone", (_event, details) => {
-    log.error("[Window] render-process-gone", details);
+    logger.error("[Window] render-process-gone", details);
 
     if (details.reason === "crashed") {
       dialog
@@ -68,11 +68,11 @@ export function createWindow(
   });
 
   win.webContents.on("unresponsive", () => {
-    log.warn("[Window] Unresponsive:", name);
+    logger.warn("[Window] Unresponsive:", name);
   });
 
   win.webContents.on("responsive", () => {
-    log.info("[Window] Responsive again:", name);
+    logger.info("[Window] Responsive again:", name);
   });
 
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {

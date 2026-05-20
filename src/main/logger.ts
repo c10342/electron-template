@@ -3,7 +3,7 @@ import { app } from "electron";
 import { wrapLogFn } from "@share/logger";
 
 // electron-log 的日志级别从低到高为：silly → debug → verbose → info → warn → error
-const log = {
+const logger = {
   ...electronLog,
   error: wrapLogFn(electronLog.error.bind(electronLog)),
   warn: wrapLogFn(electronLog.warn.bind(electronLog)),
@@ -14,9 +14,11 @@ const log = {
 } as typeof electronLog;
 
 export const initLogger = () => {
+  // C:\Users\xxx\AppData\Roaming\electron-template
   electronLog.initialize({ preload: true });
   // info 及以上级别的日志 都会写入日志文件
   electronLog.transports.file.level = "info";
+  electronLog.transports.file.format = "[{y}-{m}-{d} {h}:{i}:{s}] [{level}]{scope} {text}";
   electronLog.transports.file.maxSize = 10485760;
   const now = new Date();
   const y = now.getFullYear();
@@ -25,6 +27,7 @@ export const initLogger = () => {
   electronLog.transports.file.fileName = `${y}-${m}-${d}.log`;
   // debug 及以上级别的日志 都会打印到终端控制台
   electronLog.transports.console.level = "debug";
+  electronLog.transports.console.format = "{h}:{i}:{s} {text}";
   // 把主进程的info及以上的消息发送到渲染进程。调试时不用来回切换终端和 DevTools
   electronLog.transports.ipc.level = "info";
 
@@ -34,7 +37,7 @@ export const initLogger = () => {
     showDialog: false,
     // 每当捕获到未处理的错误时，会调用这个回调
     onError({ error, errorName, processType }) {
-      log.error(`[${processType}] ${errorName}:`, error);
+      logger.error(`[${processType}] ${errorName}:`, error);
     }
   });
 
@@ -46,13 +49,13 @@ export const initLogger = () => {
     scope: "electron"
   });
 
-  log.info("========== Application started ==========");
-  log.info(`App: ${app.getName()} v${app.getVersion()}`);
-  log.info(`Electron: ${process.versions.electron}`);
-  log.info(`Chrome: ${process.versions.chrome}`);
-  log.info(`Node: ${process.versions.node}`);
-  log.info(`OS: ${process.platform} ${process.getSystemVersion()}`);
-  log.info("==========================================");
+  logger.info("========== Application started ==========");
+  logger.info(`App: ${app.getName()} v${app.getVersion()}`);
+  logger.info(`Electron: ${process.versions.electron}`);
+  logger.info(`Chrome: ${process.versions.chrome}`);
+  logger.info(`Node: ${process.versions.node}`);
+  logger.info(`OS: ${process.platform} ${process.getSystemVersion()}`);
+  logger.info("==========================================");
 };
 
-export default log;
+export default logger;

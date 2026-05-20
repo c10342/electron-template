@@ -2,7 +2,7 @@ import { app, BrowserWindow } from "electron";
 
 import { electronApp, optimizer } from "@electron-toolkit/utils";
 
-import log, { initLogger } from "./logger";
+import logger, { initLogger } from "./logger";
 import { initI18n } from "./i18n";
 import { initBridge } from "./bridge";
 import { initUpdater } from "./updater";
@@ -42,11 +42,11 @@ app.whenReady().then(() => {
 });
 
 app.on("render-process-gone", (_event, _webContents, details) => {
-  log.error("[App] render-process-gone", details);
+  logger.error("[App] render-process-gone", details);
 });
 
 app.on("child-process-gone", (_event, details) => {
-  log.error("[App] child-process-gone", details);
+  logger.error("[App] child-process-gone", details);
 });
 
 app.on("window-all-closed", () => {

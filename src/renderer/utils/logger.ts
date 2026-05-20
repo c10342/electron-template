@@ -1,7 +1,7 @@
 import electronLog from "electron-log/renderer";
 import { wrapLogFn } from "@share/logger";
 
-const log = {
+const logger = {
   ...electronLog,
   error: wrapLogFn(electronLog.error.bind(electronLog)),
   warn: wrapLogFn(electronLog.warn.bind(electronLog)),
@@ -14,6 +14,7 @@ const log = {
 export const initLogger = () => {
   // debug 及以上级别的日志 都会打印到终端控制台
   electronLog.transports.console.level = "debug";
+  electronLog.transports.console.format = "{h}:{i}:{s} {text}";
   // 把渲染进程的info及以上的消息发送到主进程。调试时不用来回切换终端和 DevTools
   // 把渲染进程的日志发给主进程，主进程再写入日志文件
   electronLog.transports.ipc.level = "info";
@@ -22,9 +23,9 @@ export const initLogger = () => {
   electronLog.errorHandler.startCatching({
     showDialog: false,
     onError({ error, errorName }) {
-      log.error(`[renderer] ${errorName}:`, error);
+      logger.error(`[renderer] ${errorName}:`, error);
     }
   });
 };
 
-export default log;
+export default logger;
