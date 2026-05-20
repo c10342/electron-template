@@ -19,13 +19,6 @@ export const createApp = async (App: DefineComponent<any, any, any>) => {
   app.config.errorHandler = (err, _instance, info) => {
     log.error("[Vue ErrorHandler]", err, info);
   };
-  window.addEventListener("error", (event) => {
-    log.error("[Uncaught Error]", event.error);
-  });
-
-  window.addEventListener("unhandledrejection", (event) => {
-    log.error("[Unhandled Rejection]", event.reason);
-  });
 
   return app;
 };
