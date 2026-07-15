@@ -25,7 +25,7 @@ export enum GlobalEventEnum {
   MaximizeWindow = "window:maximize",
   MinimizeWindow = "window:minimize",
   RestoreWindow = "window:unmaximize",
-  LangChanged = "window:langChanged"
+  LangChanged = "langChanged"
 }
 
 export enum LangEnum {

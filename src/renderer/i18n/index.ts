@@ -1,5 +1,5 @@
 import { createI18n, I18n } from "vue-i18n";
-import { GlobalEventEnum, LangEnum } from "@share/enum";
+import { LangEnum } from "@share/enum";
 import zhCN from "./modules/zh-CN";
 import zhTW from "./modules/zh-TW";
 import enUS from "./modules/en-US";
@@ -27,10 +27,11 @@ export const initI18n = async () => {
     messages: messages
   });
 
-  window.electronAPI.ipcOn(GlobalEventEnum.LangChanged, (_, lang: string) => {
+  window.electronAPI.onLangChange((lang: string) => {
     if (!i18n) return;
     i18n.global.locale.value = lang;
   });
+
   return i18n;
 };
 

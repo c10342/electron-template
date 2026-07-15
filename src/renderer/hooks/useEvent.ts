@@ -1,12 +1,9 @@
 import { onBeforeUnmount } from "vue";
 
-export const useIpcEvent = (
-  name: string,
-  action: (event: Electron.IpcRendererEvent, ...args: any[]) => any
-) => {
-  window.electronAPI.ipcOn(name, action);
+export const useIpcEvent = (action: () => any) => {
+  const remove = action();
   onBeforeUnmount(() => {
-    window.electronAPI.ipcOff(name, action);
+    remove();
   });
 };
 

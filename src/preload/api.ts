@@ -1,4 +1,4 @@
-import { BridgeEnum } from "@share/enum";
+import { BridgeEnum, GlobalEventEnum } from "@share/enum";
 import {
   OpenDialogParams,
   SaveDialogParams,
@@ -8,18 +8,28 @@ import {
 } from "@share/type";
 import { ipcRenderer } from "electron";
 
+const ipcOn = (name: string, action: (...args: any[]) => any) => {
+  const cb = (_: Electron.IpcRendererEvent, ...args: any[]) => {
+    action(...args);
+  };
+  ipcRenderer.on(name, cb);
+  return () => {
+    ipcRenderer.off(name, cb);
+  };
+};
+
 const api = {
-  ipcOn(name: string, action: (event: Electron.IpcRendererEvent, ...args: any[]) => any) {
-    ipcRenderer.on(name, action);
+  onLangChange(action: (lang: string) => any) {
+    return ipcOn(GlobalEventEnum.LangChanged, action);
   },
-  ipcOff(name: string, action: (event: Electron.IpcRendererEvent, ...args: any[]) => any) {
-    ipcRenderer.off(name, action);
+  onWindowMaximize(action: () => any) {
+    return ipcOn(GlobalEventEnum.MaximizeWindow, action);
   },
-  ipcOnce(name: string, action: (event: Electron.IpcRendererEvent, ...args: any[]) => any) {
-    ipcRenderer.once(name, action);
+  onWindowMinimize(action: () => any) {
+    return ipcOn(GlobalEventEnum.MinimizeWindow, action);
   },
-  ipcSend(name: string, ...args: any[]) {
-    ipcRenderer.send(name, ...args);
+  onWindowRestore(action: () => any) {
+    return ipcOn(GlobalEventEnum.RestoreWindow, action);
   },
   [BridgeEnum.MaximizeWindow]() {
     ipcRenderer.send(BridgeEnum.MaximizeWindow);
