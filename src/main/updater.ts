@@ -1,11 +1,12 @@
 import { autoUpdater } from "electron-updater";
 import logger from "./logger";
+import { is } from "@electron-toolkit/utils";
 
 export const initUpdater = () => {
   autoUpdater.autoDownload = true;
   autoUpdater.autoRunAppAfterInstall = true;
   autoUpdater.logger = logger;
-  autoUpdater.forceDevUpdateConfig = true;
+  autoUpdater.forceDevUpdateConfig = is.dev;
   autoUpdater.on("checking-for-update", () => {
     logger.info("[Updater] Checking for update...");
   });
