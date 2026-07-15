@@ -8,14 +8,14 @@
     "src/share/**/*.ts"
   ],
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "composite": true,
-    "baseUrl": ".",
     "paths": {
       "@renderer/*": [
-        "src/renderer/*"
+        "./src/renderer/*"
       ],
       "@share/*": [
-        "src/share/*"
+        "./src/share/*"
       ]
     }
   }
