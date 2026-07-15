@@ -1,9 +1,9 @@
 import i18next from "i18next";
 import { LangEnum } from "@share/enum";
-import zhCN from "@share/locales/zh-CN";
-import zhTW from "@share/locales/zh-TW";
-import en from "@share/locales/en-US";
-import { getStore, setStore } from "./store";
+import zhCN from "./modules/zh-CN";
+import zhTW from "./modules/zh-TW";
+import enUS from "./modules/en-US";
+import { getStore, setStore } from "../store";
 import { defaultLang } from "@share/config";
 
 export const initI18n = () => {
@@ -14,7 +14,7 @@ export const initI18n = () => {
     resources: {
       [LangEnum.ZhCN]: { translation: zhCN },
       [LangEnum.ZhTW]: { translation: zhTW },
-      [LangEnum.En]: { translation: en }
+      [LangEnum.EnUS]: { translation: enUS }
     }
   });
 };

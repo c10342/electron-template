@@ -1,14 +1,14 @@
 import { createI18n, I18n } from "vue-i18n";
 import { GlobalEventEnum, LangEnum } from "@share/enum";
-import zhCN from "@share/locales/zh-CN";
-import zhTW from "@share/locales/zh-TW";
-import en from "@share/locales/en";
+import zhCN from "./modules/zh-CN";
+import zhTW from "./modules/zh-TW";
+import enUS from "./modules/en-US";
 import { defaultLang } from "@share/config";
 
 const messages = {
   [LangEnum.ZhCN]: zhCN,
   [LangEnum.ZhTW]: zhTW,
-  [LangEnum.En]: en
+  [LangEnum.EnUS]: enUS
 };
 let i18n: I18n<
   typeof messages,

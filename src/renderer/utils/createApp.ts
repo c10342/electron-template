@@ -1,4 +1,4 @@
-import { initI18n } from "@renderer/locales";
+import { initI18n } from "@renderer/i18n";
 import logger, { initLogger } from "./logger";
 import { DefineComponent, createApp as createVueApp } from "vue";
 import { createPinia } from "pinia";
