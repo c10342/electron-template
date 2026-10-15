@@ -52,6 +52,32 @@ npm run build:linux     # AppImage、snap、deb
 
 > 升级后应运行 `npm run typecheck`、`npm run lint:check`、`npm run lint:style` 和 `npm run build`。项目暂未配置测试框架或 `test` 脚本。
 
+### 一键生成应用图标
+
+将 `resources/icon.png` 替换为自己的正方形 PNG，然后运行：
+
+```bash
+npm run build:icons
+```
+
+也可以指定图片路径（路径包含空格时加引号），脚本会同步更新 `resources/icon.png`：
+
+```bash
+npm run build:icons -- "D:/assets/my-app.png"
+```
+
+源图要求至少 256 × 256，推荐使用带透明背景的 1024 × 1024 静态 PNG。小于 1024 的源图会提示放大可能影响清晰度；非正方形、尺寸不足或格式不符时会报错并保留现有图标。
+
+一次生成以下打包资源，Windows、macOS 和 Linux 均可执行此命令：
+
+| 文件              | 用途                                      |
+| ----------------- | ----------------------------------------- |
+| `build/icon.ico`   | Windows 应用和安装包，包含 16–256 像素图层 |
+| `build/icon.icns`  | macOS 应用，包含标准及 Retina 图层         |
+| `build/icon.png`   | Linux 应用，512 × 512                      |
+
+窗口和托盘继续读取 `resources/icon.png`，打包配置已指定上述生成文件。修改源图后重新运行命令，再执行对应平台的打包命令即可；已经运行的应用需要重启。
+
 ## 项目结构
 
 ```text
@@ -234,6 +260,7 @@ VITE_API_URL=http://localhost:3000
 | `npm run start`        | 预览已构建产物                      |
 | `npm run typecheck`    | Node 侧和 Web 侧 TypeScript 检查    |
 | `npm run build`        | 类型检查后构建                      |
+| `npm run build:icons`  | 从源 PNG 一键生成各平台应用图标      |
 | `npm run lint:check`   | ESLint 只读检查                     |
 | `npm run lint:style`   | SCSS / Vue 样式只读检查             |
 | `npm run lint`         | ESLint 检查并自动修复，会修改文件   |

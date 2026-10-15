@@ -14,6 +14,7 @@
     "start": "electron-vite preview",
     "dev": "electron-vite dev --watch",
     "build": "npm run typecheck && electron-vite build",
+    "build:icons": "node scripts/generate-icons.mjs",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
@@ -24,8 +25,7 @@
     "lint-staged": "lint-staged --config lint-staged.config.js",
     "commit": "git cz",
     "lint:check": "eslint .",
-    "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
-    "build:icons":"electron-icon-builder --input=./resources/icon.png --output=./build"
+    "lint:style": "stylelint \"src/**/*.{css,scss,vue}\""
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
@@ -55,7 +55,6 @@
     "cz-conventional-changelog": "^3.3.0",
     "electron": "^44.7.2",
     "electron-builder": "^26.15.3",
-    "electron-icon-builder": "^2.0.1",
     "electron-vite": "^6.0.0",
     "eslint": "^10.12.0",
     "eslint-plugin-vue": "^10.11.1",
@@ -64,6 +63,7 @@
     "postcss-html": "^2.0.0",
     "prettier": "^3.9.10",
     "sass-embedded": "^1.105.1",
+    "sharp": "^0.35.5",
     "stylelint": "^17.16.0",
     "stylelint-config-recess-order": "^7.8.0",
     "stylelint-config-recommended-scss": "^17.0.1",
