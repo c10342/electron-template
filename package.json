@@ -24,7 +24,8 @@
     "lint-staged": "lint-staged --config lint-staged.config.js",
     "commit": "git cz",
     "lint:check": "eslint .",
-    "lint:style": "stylelint \"src/**/*.{css,scss,vue}\""
+    "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
+    "build:icons":"electron-icon-builder --input=./resources/icon.png --output=./build"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
@@ -54,6 +55,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "electron": "^44.7.2",
     "electron-builder": "^26.15.3",
+    "electron-icon-builder": "^2.0.1",
     "electron-vite": "^6.0.0",
     "eslint": "^10.12.0",
     "eslint-plugin-vue": "^10.11.1",
