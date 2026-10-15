@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import { defineConfig, externalizeDepsPlugin } from "electron-vite";
+import { defineConfig } from "electron-vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
@@ -10,7 +10,7 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 const input: Record<string, string> = {};
 
-const pagesDir = path.resolve(__dirname, "src/renderer/pages");
+const pagesDir = path.resolve(import.meta.dirname, "src/renderer/pages");
 const pages = fs.readdirSync(pagesDir);
 
 pages.forEach((page) => {
@@ -24,7 +24,14 @@ export default defineConfig({
         "@share": resolve("src/share")
       }
     },
-    plugins: [externalizeDepsPlugin({ exclude: ["electron-store"] })]
+    build: {
+      rolldownOptions: {
+        output: {
+          format: "es",
+          entryFileNames: "index.mjs"
+        }
+      }
+    }
   },
   preload: {
     resolve: {
@@ -32,7 +39,14 @@ export default defineConfig({
         "@share": resolve("src/share")
       }
     },
-    plugins: [externalizeDepsPlugin()]
+    build: {
+      rolldownOptions: {
+        output: {
+          format: "cjs",
+          entryFileNames: "index.js"
+        }
+      }
+    }
   },
   renderer: {
     resolve: {
@@ -42,15 +56,8 @@ export default defineConfig({
       }
     },
     build: {
-      rollupOptions: {
+      rolldownOptions: {
         input: input
-      }
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          silenceDeprecations: ["legacy-js-api"]
-        }
       }
     },
     plugins: [

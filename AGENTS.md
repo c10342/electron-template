@@ -8,12 +8,12 @@
 
 ## 2. 技术栈与依赖管理
 
-- 桌面端：Electron 31、electron-vite 2、electron-builder 24。
-- 渲染层：Vue 3、TypeScript、Vite 5、Element Plus、Pinia、SCSS。
+- 桌面端：Electron 44、electron-vite 6、electron-builder 26。
+- 渲染层：Vue 3、TypeScript、Vite 8、Element Plus、Pinia、SCSS。
 - 基础能力：Axios、electron-store、electron-log、electron-updater。
 - 国际化：主进程使用 i18next，渲染进程使用 vue-i18n。
 - 工程规范：ESLint、Prettier、Stylelint、Husky、lint-staged、commitlint、Commitizen。
-- 使用 npm 管理依赖，锁文件为 `package-lock.json`。README 声明 Node.js >= 18、npm >= 9，但 `package.json` 没有通过 `engines` 强制限制版本。
+- 使用 npm 管理依赖，锁文件为 `package-lock.json`。`package.json` 通过 `engines` 声明 Node.js `^22.22.1 || >=24.0.0`、npm >= 10；推荐 Node.js 24 LTS。TypeScript 使用最新兼容版 6.0.3，等待 vue-tsc 的 JavaScript 编译器 API 和 typescript-eslint 支持 TypeScript 7 后再升级。
 
 ## 3. 目录职责
 
@@ -50,7 +50,7 @@ src/
 
 ## 4. 启动与运行链路
 
-主进程入口是 `src/main/index.ts`，构建后入口为 `out/main/index.js`。应用启动顺序如下：
+主进程入口是 `src/main/index.ts`，构建后入口为 `out/main/index.mjs`。应用启动顺序如下：
 
 1. 在 `app.whenReady()` 之前申请单实例锁；第二个实例启动时，显示并聚焦已有主窗口。
 2. Electron ready 后设置 AppUserModelId，并启用开发快捷键管理。
@@ -60,11 +60,11 @@ src/
 
 `createWindow(name, options?, params?)` 是统一窗口工厂。开发环境加载 `${ELECTRON_RENDERER_URL}/pages/${name}/index.html`，生产环境加载 `out/renderer/pages/${name}/index.html`。因此窗口名必须与 `src/renderer/pages/` 下的页面目录名完全一致。
 
-窗口默认 900×670、先隐藏后在 `ready-to-show` 显示、自动隐藏菜单栏。Linux 显式设置图标。所有窗口共用预加载脚本；`sandbox` 当前设为 `false`。新窗口请求会被拒绝并交给系统浏览器打开。渲染进程崩溃时会提示重新加载或关闭。
+窗口默认 900×670、先隐藏后在 `ready-to-show` 显示、自动隐藏菜单栏。Linux 显式设置图标。主进程使用 ESM 输出（`index.mjs`），预加载使用 CommonJS 输出（`index.js`）。所有窗口共用预加载脚本；`sandbox` 当前设为 `false`。新窗口请求会被拒绝并交给系统浏览器打开。渲染进程崩溃时会提示重新加载或关闭。
 
 ## 5. 渲染页面约定
 
-`electron.vite.config.ts` 会扫描 `src/renderer/pages/` 的每个直接子目录，并把其中的 `index.html` 注册成 Rollup 输入。新增页面时至少创建：
+`electron.vite.config.ts` 会扫描 `src/renderer/pages/` 的每个直接子目录，并把其中的 `index.html` 注册成 Rolldown 输入。新增页面时至少创建：
 
 ```text
 src/renderer/pages/<页面名>/
@@ -107,7 +107,7 @@ IPC 通道统一定义在 `src/share/enum.ts` 的 `BridgeEnum` 中；主进程�
 1. 在 `src/share/enum.ts` 增加或调整通道枚举。
 2. 在 `src/share/type.ts` 定义跨进程参数、返回值和持久化 schema。
 3. 在 `src/main/bridge.ts` 注册 `ipcMain.on` 或 `ipcMain.handle`。
-4. 在 `src/preload/api.ts` 暴露最小必要 API；`src/preload/index.d.ts` 会通过 `typeof api` 自动获得类型。
+4. 在 `src/preload/api.ts` 暴露最小必要 API；`src/preload/global.d.ts` 会通过 `typeof api` 自动获得类型。
 5. 若是主进程广播事件，在 preload 中提供返回“取消监听函数”的专用订阅方法，并在 Vue 组件卸载时清理。
 
 不要把原始 `ipcRenderer`、事件对象或不受约束的通道发送能力暴露给渲染进程。
@@ -188,8 +188,6 @@ npm run commit          # Commitizen 交互式提交
 
 - `electron-builder.yml` 当前的 `appId: com.electron.app`、`productName: electron-template`、Windows 可执行文件名以及 `publish.url: https://example.com/auto-updates` 都是模板占位值，正式产品必须替换。
 - Windows 使用 NSIS，并始终创建桌面快捷方式；macOS 未启用 notarize；Linux 同时配置 AppImage、snap 和 deb。
-- Electron 和 electron-builder 二进制使用 npmmirror 镜像。
+- Electron 和 electron-builder 二进制通过 `package.json` 的 `config` 字段及打包配置使用 npmmirror 镜像，避免 npm 11 对 `.npmrc` 自定义字段的警告。
 - `initUpdater()` 目前只注册监听器，没有调用 `checkForUpdate()`，因此应用启动后不会主动发起检查。
 - 更新器配置了自动下载和下载完成后立即 `quitAndInstall()`，且 `forceDevUpdateConfig = true`。调整更新策略时需同时检查 `src/main/updater.ts`、`electron-builder.yml` 和 `dev-app-update.yml`。
-
-

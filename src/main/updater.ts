@@ -1,6 +1,8 @@
-import { autoUpdater } from "electron-updater";
+import electronUpdater from "electron-updater";
 import logger from "./logger";
 import { is } from "@electron-toolkit/utils";
+
+const { autoUpdater } = electronUpdater;
 
 export const initUpdater = () => {
   autoUpdater.autoDownload = true;

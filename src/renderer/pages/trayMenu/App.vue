@@ -19,8 +19,8 @@ useDomResize(() => menuRef.value, onResizeTrayWindow);
 
 <style lang="scss">
 .tray-menu {
-  background-color: #fff;
   width: 100px;
   height: 200px;
+  background-color: #fff;
 }
 </style>

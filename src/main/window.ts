@@ -18,7 +18,7 @@ export function createWindow(
     ...(process.platform === "linux" ? { icon } : {}),
     ...(options || {}),
     webPreferences: {
-      preload: join(__dirname, "../preload/index.js"),
+      preload: join(import.meta.dirname, "../preload/index.js"),
       sandbox: false,
       ...(options?.webPreferences || {})
     }
@@ -78,7 +78,7 @@ export function createWindow(
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
     win.loadURL(`${process.env["ELECTRON_RENDERER_URL"]}/pages/${name}/index.html`);
   } else {
-    win.loadFile(join(__dirname, `../renderer/pages/${name}/index.html`));
+    win.loadFile(join(import.meta.dirname, `../renderer/pages/${name}/index.html`));
   }
   return win;
 }

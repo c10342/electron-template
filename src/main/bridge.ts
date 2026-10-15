@@ -76,11 +76,11 @@ export const initBridge = () => {
       setStoreValue(key, value);
     }
   );
-  ipcMain.handle(BridgeEnum.ReadClipboardText, (): string => {
+  ipcMain.handle(BridgeEnum.ReadClipboardText, (): Promise<string> => {
     return clipboard.readText();
   });
-  ipcMain.handle(BridgeEnum.WriteClipboardText, (_event, text: string): void => {
-    clipboard.writeText(text);
+  ipcMain.handle(BridgeEnum.WriteClipboardText, (_event, text: string): Promise<void> => {
+    return clipboard.writeText(text);
   });
   ipcMain.handle(BridgeEnum.ShowNotification, (_event, params: NotificationParams): boolean => {
     if (!Notification.isSupported()) return false;

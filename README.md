@@ -1,6 +1,6 @@
 # Electron Template
 
-基于 **Electron 31 + Vue 3 + TypeScript** 的跨平台桌面应用模板，使用 electron-vite 统一构建主进程、预加载脚本和渲染进程，并内置多窗口、IPC、系统托盘、持久化、国际化、日志、HTTP 和自动更新等基础能力。
+基于 **Electron 44 + Vue 3 + TypeScript** 的跨平台桌面应用模板，使用 electron-vite 统一构建主进程、预加载脚本和渲染进程，并内置多窗口、IPC、系统托盘、持久化、国际化、日志、HTTP 和自动更新等基础能力。
 
 当前项目仍处于模板阶段：主窗口和托盘菜单仅有演示 UI，语言资源为空，应用标识和更新服务器地址也仍是占位值。
 
@@ -8,9 +8,9 @@
 
 | 类别   | 技术                                           | 用途                     |
 | ------ | ---------------------------------------------- | ------------------------ |
-| 桌面端 | Electron 31                                    | 窗口、托盘和系统原生能力 |
+| 桌面端 | Electron 44                                    | 窗口、托盘和系统原生能力 |
 | 渲染层 | Vue 3 + TypeScript                             | 桌面界面                 |
-| 构建   | electron-vite 2 + Vite 5                       | 三类进程统一开发与构建   |
+| 构建   | electron-vite 6 + Vite 8                       | 三类进程统一开发与构建   |
 | UI     | Element Plus                                   | 自动按需导入的组件库     |
 | 状态   | Pinia + electron-store                         | UI 状态与本地持久化      |
 | 国际化 | i18next + vue-i18n                             | 主进程和渲染进程多语言   |
@@ -23,10 +23,12 @@
 
 ### 环境要求
 
-- Node.js >= 18
-- npm >= 9
+- Node.js 22.22.1+ 或 24+（推荐 Node.js 24 LTS）
+- npm >= 10
 
-`package.json` 暂未通过 `engines` 强制版本，以上要求来自项目约定。
+`package.json` 已声明 `engines`。主进程构建为 ESM（`index.mjs`），以支持新版 electron-store；预加载脚本仍构建为 CommonJS（`index.js`）。
+
+依赖升级基线核实于 2026-10-15：直接依赖使用 npm `latest` 稳定版，TypeScript 例外使用 6.0.3。TypeScript 7 已更换为原生编译器，当前 vue-tsc 依赖 JavaScript 编译器 API，typescript-eslint 声明的支持范围也仍为 `<6.1.0`，因此暂不升级到 7。升级时不使用 `--force` 或 `--legacy-peer-deps` 绕过兼容性检查。
 
 ### 安装与开发
 
@@ -39,6 +41,8 @@ npm run dev
 
 ```bash
 npm run typecheck       # 主进程/预加载 + 渲染进程类型检查
+npm run lint:check      # ESLint 只读检查
+npm run lint:style      # SCSS / Vue 样式只读检查
 npm run build           # 类型检查后构建
 npm run build:unpack    # 构建并生成未封装应用目录
 npm run build:win       # Windows NSIS 安装包
@@ -46,7 +50,7 @@ npm run build:mac       # macOS DMG
 npm run build:linux     # AppImage、snap、deb
 ```
 
-> 当前基线已通过 `npm run typecheck`。项目暂未配置测试框架或 `test` 脚本。
+> 升级后应运行 `npm run typecheck`、`npm run lint:check`、`npm run lint:style` 和 `npm run build`。项目暂未配置测试框架或 `test` 脚本。
 
 ## 项目结构
 
@@ -68,7 +72,7 @@ electron-template/
 │  ├─ preload/
 │  │  ├─ index.ts                 # 通过 contextBridge 注入 API
 │  │  ├─ api.ts                   # 渲染进程可调用的白名单 API
-│  │  └─ index.d.ts               # window.electronAPI 类型声明
+│  │  └─ global.d.ts              # window.electronAPI 类型声明
 │  ├─ renderer/
 │  │  ├─ pages/
 │  │  │  ├─ main/                 # 主窗口页面
@@ -230,6 +234,8 @@ VITE_API_URL=http://localhost:3000
 | `npm run start`        | 预览已构建产物                      |
 | `npm run typecheck`    | Node 侧和 Web 侧 TypeScript 检查    |
 | `npm run build`        | 类型检查后构建                      |
+| `npm run lint:check`   | ESLint 只读检查                     |
+| `npm run lint:style`   | SCSS / Vue 样式只读检查             |
 | `npm run lint`         | ESLint 检查并自动修复，会修改文件   |
 | `npm run format`       | Prettier 格式化整个项目，会修改文件 |
 | `npm run build:unpack` | 构建未封装应用目录                  |
@@ -265,7 +271,7 @@ Element Plus 已配置自动导入：
 - Windows：NSIS，始终创建桌面快捷方式。
 - macOS：DMG，当前未启用 notarize。
 - Linux：AppImage、snap、deb。
-- Electron 和 electron-builder 二进制使用 npmmirror 镜像。
+- Electron 和 electron-builder 二进制通过 `package.json` 的 `config` 字段及打包配置使用 npmmirror 镜像，避免 npm 11 对 `.npmrc` 自定义字段的警告。
 
 以下值仍是模板占位配置，正式发布前必须替换：
 
